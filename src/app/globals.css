@@ -3,25 +3,36 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #fafaf9;
+  --foreground: #1c1917;
+  --rakura-gold: #b8860b;
+  --rakura-gold-light: #d4a84b;
+  --rakura-accent: #4a5568;
+  --rakura-purple: #5b4d7a;
+  --rakura-muted: #78716c;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sarabun), ui-sans-serif, system-ui, sans-serif;
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+/* Section heading accent line */
+.section-heading {
+  @apply relative inline-block;
+}
+.section-heading::after {
+  content: "";
+  @apply absolute -bottom-2 left-0 h-0.5 w-12 rounded-full bg-rakura-gold;
 }
