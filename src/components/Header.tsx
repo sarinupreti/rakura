@@ -71,23 +71,6 @@ export function Header({ locale }: { locale: Locale }) {
               ? pathname.includes(`/${page}`)
               : isHome && (pathname === base || pathname === `${base}/`);
 
-            // Quiz gets a special gold pill style
-            if (key === "quiz") {
-              return (
-                <Link
-                  key={key}
-                  href={path}
-                  className={`text-xs font-semibold tracking-wider uppercase px-3 py-1.5 border transition-colors duration-200 ${
-                    active
-                      ? "border-rakura-gold bg-rakura-gold text-rakura-dark"
-                      : "border-rakura-gold/50 text-rakura-gold hover:border-rakura-gold hover:bg-rakura-gold/10"
-                  }`}
-                >
-                  🍵 {t[key]}
-                </Link>
-              );
-            }
-
             return (
               <Link
                 key={key}
@@ -96,7 +79,7 @@ export function Header({ locale }: { locale: Locale }) {
                   active ? "text-rakura-gold" : "text-white/70 hover:text-white"
                 }`}
               >
-                {t[key]}
+                {key === "quiz" ? `🍵 ${t[key]}` : t[key]}
               </Link>
             );
           })}
