@@ -32,30 +32,22 @@ export function ProductsSection({ locale }: { locale: Locale }) {
   const t = getTranslations(locale).products;
   const isEn = locale === "en";
 
-  // Products shown in the vertical grid
+  // Products shown in the vertical grid.
+  // When "all" is selected, Collections are excluded because they're already
+  // featured in the shelf above — no duplication.
   const filteredProducts = useMemo(() => {
-    if (activeCategory === "all") return products;
+    if (activeCategory === "all") return products.filter((p) => p.category !== "collections");
     return products.filter((p) => p.category === activeCategory);
   }, [activeCategory]);
 
-  // Products shown in the horizontal shelf:
-  // "all"  → flagship collections as a curated preview
-  // other  → that category's products
-  const shelfProducts = useMemo(() => {
-    if (activeCategory === "all") return getFeaturedProducts();
-    return getProductsByCategory(activeCategory);
-  }, [activeCategory]);
+  // The shelf always shows the flagship Collections as a curated hero preview.
+  const shelfProducts = useMemo(() => getFeaturedProducts(), []);
 
-  const shelfLabel =
-    activeCategory === "all"
-      ? isEn ? "Featured Collection" : "คอลเลกชันแนะนำ"
-      : isEn
-        ? `Browse ${t[categoryKeys[activeCategory]]}`
-        : `เลือกดู ${t[categoryKeys[activeCategory]]}`;
+  const shelfLabel = isEn ? "Featured Collections" : "คอลเลกชันแนะนำ";
 
   const productCountLabel =
     activeCategory === "all"
-      ? isEn ? `${products.length} teas` : `${products.length} รายการ`
+      ? isEn ? `${filteredProducts.length} teas` : `${filteredProducts.length} รายการ`
       : isEn
         ? `${filteredProducts.length} ${t[categoryKeys[activeCategory]]} teas`
         : `${filteredProducts.length} รายการ`;
