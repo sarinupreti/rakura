@@ -33,7 +33,7 @@ export function Header({ locale }: { locale: Locale }) {
         >
           {!logoFailed ? (
             <Image
-              src="/assets/logo.png"
+              src="/assets/logo-transparent.png"
               alt="Rakura"
               width={120}
               height={32}

@@ -153,17 +153,45 @@ function ContactFormInner({ locale }: { locale: Locale }) {
           </a>
         </div>
 
-        <div className="pt-6 border-t border-foreground/10 dark:border-white/10 space-y-1">
-          <p className="font-semibold text-foreground">{contact.companyName}</p>
-          <p className="text-sm text-rakura-muted mt-3 font-medium">{contact.regional.label}</p>
-          <p className="text-sm text-rakura-muted">{contact.regional.address}</p>
-          <p className="text-sm text-rakura-muted">{contact.regional.phone}</p>
-          <p className="text-sm text-rakura-muted mt-3 font-medium">{contact.headOffice.label}</p>
-          <p className="text-sm text-rakura-muted">{contact.headOffice.address}</p>
-          <p className="text-sm text-rakura-muted">{contact.headOffice.phone}</p>
-          <a href={`mailto:${contact.email}`} className="text-rakura-gold hover:text-rakura-gold-light text-sm mt-3 inline-block transition-colors">
-            {contact.email}
-          </a>
+        <div className="pt-6 border-t border-foreground/10 dark:border-white/10 space-y-4">
+          {/* Thailand contacts */}
+          <div>
+            <p className="text-xs font-semibold tracking-widest uppercase text-rakura-gold mb-3">
+              {locale === "th" ? "ติดต่อในประเทศไทย" : "For Inquiries — Thailand"}
+            </p>
+            <div className="space-y-2">
+              {contact.thailand.agents.map((agent) => (
+                <div key={agent.name} className="flex items-start gap-3">
+                  <div className="w-1.5 h-1.5 rounded-full bg-rakura-gold mt-2 shrink-0" />
+                  <div>
+                    <span className="text-sm text-foreground font-medium">{agent.name}</span>
+                    <span className="text-xs text-rakura-muted ml-2">({agent.languages})</span>
+                    <a href={`tel:${agent.phone.replace(/\s/g, "")}`} className="block text-sm text-rakura-gold hover:text-rakura-gold-light transition-colors">
+                      {agent.phone}
+                    </a>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="mt-3 space-y-1">
+              <a href={`mailto:${contact.thailand.email}`} className="block text-sm text-rakura-gold hover:text-rakura-gold-light transition-colors">
+                {contact.thailand.email}
+              </a>
+              <a href={contact.thailand.website} target="_blank" rel="noopener noreferrer" className="block text-sm text-rakura-muted hover:text-foreground transition-colors">
+                {contact.thailand.website}
+              </a>
+            </div>
+          </div>
+
+          {/* Head office */}
+          <div className="pt-3 border-t border-foreground/10 dark:border-white/10">
+            <p className="text-xs font-semibold tracking-widest uppercase text-rakura-muted mb-2">{contact.headOffice.label}</p>
+            <p className="text-xs text-rakura-muted">{contact.headOffice.address}</p>
+            <p className="text-xs text-rakura-muted">{contact.headOffice.phone}</p>
+            <a href={`mailto:${contact.email}`} className="text-rakura-gold hover:text-rakura-gold-light text-xs mt-1 inline-block transition-colors">
+              {contact.email}
+            </a>
+          </div>
         </div>
       </section>
     </div>

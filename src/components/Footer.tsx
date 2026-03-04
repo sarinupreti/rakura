@@ -18,18 +18,16 @@ export function Footer({ locale }: { locale: Locale }) {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
             {!logoFailed ? (
-              <span className="inline-block h-7 [&_img]:h-7 [&_img]:w-auto [&_img]:object-contain">
-                <Image
-                  src="/assets/logo.png"
-                  alt="Rakura"
-                  width={100}
-                  height={28}
-                  className="brightness-0 invert opacity-90"
-                  onError={() => setLogoFailed(true)}
-                />
-              </span>
+              <Image
+                src="/assets/logo-transparent.png"
+                alt="Rakura"
+                width={120}
+                height={36}
+                className="h-9 w-auto object-contain opacity-90"
+                onError={() => setLogoFailed(true)}
+              />
             ) : (
-              <p className="font-semibold text-white text-lg">Rakura</p>
+              <p className="font-display font-bold text-white text-xl tracking-wide">Rakura</p>
             )}
             <p className="text-sm mt-1">{t.talkTea}</p>
             <p className="text-sm mt-2">{contact.tagline}</p>
