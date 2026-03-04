@@ -209,12 +209,12 @@ export default function HomePage({ params }: { params: { locale: string } }) {
                   href={`/${locale}#products`}
                   className="group block rounded-sm overflow-hidden border border-white/10 hover:border-rakura-gold/50 transition-all duration-300 hover:-translate-y-1"
                 >
-                  <div className="aspect-[3/4] relative bg-stone-900 overflow-hidden">
+                  <div className="aspect-[3/4] relative bg-stone-900 overflow-hidden flex items-center justify-center">
                     <Image
                       src={product.image!}
                       alt={locale === "th" ? product.nameTh : product.nameEn}
                       fill
-                      className="object-cover object-top group-hover:scale-105 transition-transform duration-500"
+                      className="object-contain p-6 group-hover:scale-105 transition-transform duration-500"
                       sizes="(max-width: 640px) 50vw, 25vw"
                     />
                   </div>
