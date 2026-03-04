@@ -189,10 +189,10 @@ export default function ProductDetailPage({
               </div>
 
               {/* CTAs */}
-              <div className="flex flex-col sm:flex-row gap-3 pt-2">
+              <div className="flex flex-col sm:flex-row sm:justify-center gap-3 pt-2">
                 <Link
                   href={inquireUrl}
-                  className="flex-1 inline-flex items-center justify-center bg-rakura-gold text-rakura-dark font-semibold text-xs tracking-wider uppercase py-3.5 hover:bg-rakura-gold-light transition-colors duration-200"
+                  className="inline-flex items-center justify-center bg-rakura-gold text-rakura-dark font-semibold text-xs tracking-wider uppercase py-3.5 px-8 hover:bg-rakura-gold-light transition-colors duration-200"
                 >
                   {isEn ? "Enquire About This Product" : "สอบถามสินค้านี้"}
                 </Link>
