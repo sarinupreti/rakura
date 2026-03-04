@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Sarabun } from "next/font/google";
+import { Sarabun, Playfair_Display } from "next/font/google";
 import { LangSetter } from "@/components/LangSetter";
 import "./globals.css";
 
@@ -7,6 +7,13 @@ const sarabun = Sarabun({
   weight: ["300", "400", "500", "600", "700"],
   subsets: ["latin", "thai"],
   variable: "--font-sarabun",
+  display: "swap",
+});
+
+const playfairDisplay = Playfair_Display({
+  weight: ["400", "600", "700", "800"],
+  subsets: ["latin"],
+  variable: "--font-playfair",
   display: "swap",
 });
 
@@ -26,7 +33,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="th" className={sarabun.variable}>
+    <html lang="th" className={`${sarabun.variable} ${playfairDisplay.variable}`}>
       <body className="antialiased min-h-screen flex flex-col">
         <LangSetter />
         {children}

@@ -3,13 +3,23 @@
 @tailwind utilities;
 
 :root {
-  --background: #fafaf9;
-  --foreground: #1c1917;
-  --rakura-gold: #b8860b;
-  --rakura-gold-light: #d4a84b;
+  --background: #f7f3ec;
+  --foreground: #1a1512;
+  --rakura-gold: #c9a52a;
+  --rakura-gold-light: #debb50;
   --rakura-accent: #4a5568;
   --rakura-purple: #5b4d7a;
-  --rakura-muted: #78716c;
+  --rakura-muted: #6b5e52;
+  --rakura-crimson: #a31621;
+  --rakura-dark: #0f0e0c;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #120f0d;
+    --foreground: #f0ebe3;
+    --rakura-muted: #9e8e7e;
+  }
 }
 
 html {
@@ -35,4 +45,9 @@ body {
 .section-heading::after {
   content: "";
   @apply absolute -bottom-2 left-0 h-0.5 w-12 rounded-full bg-rakura-gold;
+}
+
+/* Eyebrow label */
+.eyebrow {
+  @apply tracking-[0.25em] uppercase text-xs font-medium text-rakura-gold;
 }

@@ -19,15 +19,17 @@ const navLinks = [
 export function Header({ locale }: { locale: Locale }) {
   const pathname = usePathname();
   const [logoFailed, setLogoFailed] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
   const t = getTranslations(locale).nav;
   const base = `/${locale}`;
 
   return (
-    <header className="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-stone-200/80 shadow-soft">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 flex items-center justify-between h-16">
+    <header className="sticky top-0 z-50 bg-background/95 backdrop-blur-md border-b border-foreground/10 shadow-sm">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between h-16">
+        {/* Logo */}
         <Link
           href={base}
-          className="font-semibold text-xl text-foreground tracking-tight flex items-center gap-2 min-h-[2rem] transition-opacity hover:opacity-80"
+          className="font-semibold text-xl text-foreground tracking-tight flex items-center gap-2 min-h-[2rem] transition-opacity hover:opacity-75"
         >
           {!logoFailed ? (
             <Image
@@ -39,9 +41,11 @@ export function Header({ locale }: { locale: Locale }) {
               onError={() => setLogoFailed(true)}
             />
           ) : (
-            <span>Rakura</span>
+            <span className="font-display font-bold tracking-wide">Rakura</span>
           )}
         </Link>
+
+        {/* Desktop nav */}
         <nav className="hidden md:flex items-center gap-8">
           {navLinks.map(({ href, key, anchor }) => {
             const path = anchor ? `${base}#${anchor}` : base;
@@ -51,8 +55,10 @@ export function Header({ locale }: { locale: Locale }) {
               <Link
                 key={key}
                 href={path}
-                className={`text-sm font-medium transition-colors duration-200 underline-offset-4 ${
-                  active ? "text-rakura-gold" : "text-rakura-muted hover:text-foreground hover:underline"
+                className={`text-sm font-medium tracking-wide transition-colors duration-200 ${
+                  active
+                    ? "text-rakura-gold"
+                    : "text-foreground/70 hover:text-foreground"
                 }`}
               >
                 {t[key]}
@@ -60,10 +66,43 @@ export function Header({ locale }: { locale: Locale }) {
             );
           })}
         </nav>
+
         <div className="flex items-center gap-4">
           <LocaleSwitcher locale={locale} pathname={pathname} />
+          {/* Mobile menu button */}
+          <button
+            type="button"
+            onClick={() => setMobileOpen((o) => !o)}
+            className="md:hidden flex flex-col gap-1.5 p-2 text-foreground/70 hover:text-foreground"
+            aria-label="Toggle menu"
+          >
+            <span className={`block h-0.5 w-5 bg-current transition-transform duration-200 ${mobileOpen ? "translate-y-2 rotate-45" : ""}`} />
+            <span className={`block h-0.5 w-5 bg-current transition-opacity duration-200 ${mobileOpen ? "opacity-0" : ""}`} />
+            <span className={`block h-0.5 w-5 bg-current transition-transform duration-200 ${mobileOpen ? "-translate-y-2 -rotate-45" : ""}`} />
+          </button>
         </div>
       </div>
+
+      {/* Mobile menu */}
+      {mobileOpen && (
+        <div className="md:hidden border-t border-foreground/10 bg-background/98">
+          <nav className="flex flex-col px-4 py-3 gap-1">
+            {navLinks.map(({ href, key, anchor }) => {
+              const path = anchor ? `${base}#${anchor}` : base;
+              return (
+                <Link
+                  key={key}
+                  href={path}
+                  onClick={() => setMobileOpen(false)}
+                  className="py-2.5 text-sm font-medium text-foreground/70 hover:text-foreground transition-colors"
+                >
+                  {t[key]}
+                </Link>
+              );
+            })}
+          </nav>
+        </div>
+      )}
     </header>
   );
 }
@@ -76,7 +115,7 @@ function LocaleSwitcher({ locale, pathname }: { locale: Locale; pathname: string
   return (
     <Link
       href={newPath}
-      className="text-sm font-medium text-rakura-muted hover:text-foreground"
+      className="text-xs font-semibold tracking-widest uppercase text-rakura-gold hover:text-rakura-gold-light transition-colors border border-rakura-gold/40 hover:border-rakura-gold rounded px-2.5 py-1"
       aria-label={`Switch to ${localeNames[otherLocale]}`}
     >
       {localeNames[otherLocale]}

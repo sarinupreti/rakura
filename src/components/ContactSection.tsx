@@ -47,15 +47,17 @@ function ContactFormInner({ locale }: { locale: Locale }) {
     [formData]
   );
 
+  const inputCls = "w-full border-b border-foreground/20 dark:border-white/20 bg-transparent px-0 py-2.5 text-foreground placeholder:text-rakura-muted/60 focus:border-rakura-gold focus:outline-none transition-colors duration-200 text-sm";
   const lineUrl = process.env.NEXT_PUBLIC_LINE_URL || "#";
   const whatsappUrl = process.env.NEXT_PUBLIC_WHATSAPP_URL || "https://wa.me/66";
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-14">
+      {/* Form */}
       <section>
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label htmlFor="contact-name" className="block text-sm font-medium text-foreground mb-1">
+            <label htmlFor="contact-name" className="block text-xs font-semibold tracking-wider uppercase text-rakura-muted mb-2">
               {t.formName} *
             </label>
             <input
@@ -64,11 +66,11 @@ function ContactFormInner({ locale }: { locale: Locale }) {
               required
               value={formData.name}
               onChange={(e) => setFormData((d) => ({ ...d, name: e.target.value }))}
-              className="w-full rounded-xl border border-stone-300 px-4 py-2.5 text-foreground bg-white focus:ring-2 focus:ring-rakura-gold/50 focus:border-rakura-gold outline-none transition-shadow duration-200"
+              className={inputCls}
             />
           </div>
           <div>
-            <label htmlFor="contact-email" className="block text-sm font-medium text-foreground mb-1">
+            <label htmlFor="contact-email" className="block text-xs font-semibold tracking-wider uppercase text-rakura-muted mb-2">
               {t.formEmail} *
             </label>
             <input
@@ -77,11 +79,11 @@ function ContactFormInner({ locale }: { locale: Locale }) {
               required
               value={formData.email}
               onChange={(e) => setFormData((d) => ({ ...d, email: e.target.value }))}
-              className="w-full rounded-xl border border-stone-300 px-4 py-2.5 text-foreground bg-white focus:ring-2 focus:ring-rakura-gold/50 focus:border-rakura-gold outline-none transition-shadow duration-200"
+              className={inputCls}
             />
           </div>
           <div>
-            <label htmlFor="contact-phone" className="block text-sm font-medium text-foreground mb-1">
+            <label htmlFor="contact-phone" className="block text-xs font-semibold tracking-wider uppercase text-rakura-muted mb-2">
               {t.formPhone}
             </label>
             <input
@@ -89,11 +91,11 @@ function ContactFormInner({ locale }: { locale: Locale }) {
               type="tel"
               value={formData.phone}
               onChange={(e) => setFormData((d) => ({ ...d, phone: e.target.value }))}
-              className="w-full rounded-xl border border-stone-300 px-4 py-2.5 text-foreground bg-white focus:ring-2 focus:ring-rakura-gold/50 focus:border-rakura-gold outline-none transition-shadow duration-200"
+              className={inputCls}
             />
           </div>
           <div>
-            <label htmlFor="contact-productInterest" className="block text-sm font-medium text-foreground mb-1">
+            <label htmlFor="contact-productInterest" className="block text-xs font-semibold tracking-wider uppercase text-rakura-muted mb-2">
               {t.formProductInterest}
             </label>
             <input
@@ -101,11 +103,11 @@ function ContactFormInner({ locale }: { locale: Locale }) {
               type="text"
               value={formData.productInterest}
               onChange={(e) => setFormData((d) => ({ ...d, productInterest: e.target.value }))}
-              className="w-full rounded-xl border border-stone-300 px-4 py-2.5 text-foreground bg-white focus:ring-2 focus:ring-rakura-gold/50 focus:border-rakura-gold outline-none transition-shadow duration-200"
+              className={inputCls}
             />
           </div>
           <div>
-            <label htmlFor="contact-message" className="block text-sm font-medium text-foreground mb-1">
+            <label htmlFor="contact-message" className="block text-xs font-semibold tracking-wider uppercase text-rakura-muted mb-2">
               {t.formMessage}
             </label>
             <textarea
@@ -113,48 +115,53 @@ function ContactFormInner({ locale }: { locale: Locale }) {
               rows={4}
               value={formData.message}
               onChange={(e) => setFormData((d) => ({ ...d, message: e.target.value }))}
-              className="w-full rounded-xl border border-stone-300 px-4 py-2.5 text-foreground bg-white focus:ring-2 focus:ring-rakura-gold/50 focus:border-rakura-gold outline-none resize-none transition-shadow duration-200"
+              className={`${inputCls} resize-none`}
             />
           </div>
-          {status === "success" && <p className="text-green-600 text-sm">{t.success}</p>}
-          {status === "error" && <p className="text-red-600 text-sm">{t.error}</p>}
+          {status === "success" && <p className="text-green-600 text-sm font-medium">{t.success}</p>}
+          {status === "error" && <p className="text-red-500 text-sm font-medium">{t.error}</p>}
           <button
             type="submit"
             disabled={status === "sending"}
-            className="w-full rounded-xl bg-rakura-gold text-white font-medium py-3 shadow-soft hover:shadow-gold hover:scale-[1.01] active:scale-[0.99] disabled:opacity-50 disabled:hover:scale-100 transition-all duration-200"
+            className="w-full bg-rakura-gold text-rakura-dark font-semibold text-xs tracking-wider uppercase py-3.5 hover:bg-rakura-gold-light disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
           >
             {status === "sending" ? (locale === "th" ? "กำลังส่ง..." : "Sending...") : t.submit}
           </button>
         </form>
       </section>
 
-      <section className="space-y-6">
-        <p className="text-sm text-rakura-muted">{t.weReply}</p>
-        <a
-          href={lineUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center justify-center gap-2 w-full rounded-xl bg-[#06C755] text-white font-medium py-3 hover:opacity-90 hover:scale-[1.02] active:scale-[0.98] transition-transform duration-200"
-        >
-          {t.lineCta}
-        </a>
-        <a
-          href={whatsappUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center justify-center gap-2 w-full rounded-xl bg-[#25D366] text-white font-medium py-3 hover:opacity-90 hover:scale-[1.02] active:scale-[0.98] transition-transform duration-200"
-        >
-          {t.whatsappCta}
-        </a>
-        <div className="pt-4 border-t border-stone-200">
-          <p className="font-medium text-foreground">{contact.companyName}</p>
-          <p className="text-sm text-rakura-muted mt-2">{contact.regional.label}</p>
+      {/* Contact info */}
+      <section className="space-y-8">
+        <p className="text-sm text-rakura-muted leading-relaxed">{t.weReply}</p>
+
+        <div className="flex flex-col gap-3">
+          <a
+            href={lineUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center justify-center gap-2 w-full border border-[#06C755] text-[#06C755] font-semibold text-xs tracking-wider uppercase py-3 hover:bg-[#06C755] hover:text-white transition-colors duration-200"
+          >
+            {t.lineCta}
+          </a>
+          <a
+            href={whatsappUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center justify-center gap-2 w-full border border-[#25D366] text-[#25D366] font-semibold text-xs tracking-wider uppercase py-3 hover:bg-[#25D366] hover:text-white transition-colors duration-200"
+          >
+            {t.whatsappCta}
+          </a>
+        </div>
+
+        <div className="pt-6 border-t border-foreground/10 dark:border-white/10 space-y-1">
+          <p className="font-semibold text-foreground">{contact.companyName}</p>
+          <p className="text-sm text-rakura-muted mt-3 font-medium">{contact.regional.label}</p>
           <p className="text-sm text-rakura-muted">{contact.regional.address}</p>
           <p className="text-sm text-rakura-muted">{contact.regional.phone}</p>
-          <p className="text-sm text-rakura-muted mt-3">{contact.headOffice.label}</p>
+          <p className="text-sm text-rakura-muted mt-3 font-medium">{contact.headOffice.label}</p>
           <p className="text-sm text-rakura-muted">{contact.headOffice.address}</p>
           <p className="text-sm text-rakura-muted">{contact.headOffice.phone}</p>
-          <a href={`mailto:${contact.email}`} className="text-rakura-gold hover:underline text-sm mt-2 inline-block">
+          <a href={`mailto:${contact.email}`} className="text-rakura-gold hover:text-rakura-gold-light text-sm mt-3 inline-block transition-colors">
             {contact.email}
           </a>
         </div>
@@ -166,16 +173,17 @@ function ContactFormInner({ locale }: { locale: Locale }) {
 export function ContactSection({ locale }: { locale: Locale }) {
   const t = getTranslations(locale).contact;
   return (
-    <section id="contact" className="py-16 px-4 scroll-mt-20 bg-white">
-      <div className="max-w-2xl mx-auto md:max-w-4xl">
-        <header className="mb-10">
+    <section id="contact" className="py-20 sm:py-28 px-4 scroll-mt-16 bg-background">
+      <div className="max-w-4xl mx-auto">
+        <header className="mb-12">
           <AnimateOnView animation="fade-in-up">
-            <h2 className="text-3xl font-bold text-foreground section-heading">{t.title}</h2>
-            <p className="mt-2 text-rakura-muted">{t.subtitle}</p>
+            <p className="eyebrow mb-3">{locale === "th" ? "ติดต่อเรา" : "Get In Touch"}</p>
+            <h2 className="font-display font-bold text-foreground text-3xl sm:text-4xl section-heading">{t.title}</h2>
+            <p className="mt-4 text-rakura-muted">{t.subtitle}</p>
           </AnimateOnView>
         </header>
         <AnimateOnView animation="fade-in-up" delay={80}>
-          <Suspense fallback={<div className="animate-pulse h-64 bg-stone-100 rounded-2xl" />}>
+          <Suspense fallback={<div className="animate-pulse h-64 bg-foreground/5 rounded-sm" />}>
             <ContactFormInner locale={locale} />
           </Suspense>
         </AnimateOnView>

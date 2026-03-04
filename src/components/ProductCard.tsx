@@ -12,36 +12,39 @@ export function ProductCard({ product, locale }: { product: Product; locale: Loc
   const hasImage = product.image && !product.image.includes("placeholder");
 
   return (
-    <article className="group rounded-2xl border border-stone-200 bg-white overflow-hidden shadow-soft hover:shadow-soft-lg hover:border-rakura-gold/40 hover:-translate-y-1 transition-all duration-300 flex flex-col">
-      <div className="aspect-square bg-stone-100 relative flex items-center justify-center overflow-hidden">
+    <article className="group flex flex-col rounded-sm border border-foreground/10 dark:border-white/10 bg-background overflow-hidden hover:border-rakura-gold/50 hover:-translate-y-0.5 transition-all duration-300">
+      {/* Product image */}
+      <div className="aspect-[3/4] relative bg-stone-100 dark:bg-stone-900 overflow-hidden">
         {hasImage ? (
           <Image
             src={product.image!}
             alt={name}
             fill
-            className="object-cover group-hover:scale-105 transition-transform duration-500"
-            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+            className="object-cover object-top group-hover:scale-105 transition-transform duration-500"
+            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
           />
         ) : (
-          <span className="text-rakura-muted font-medium">Rakura</span>
+          <div className="absolute inset-0 flex items-center justify-center">
+            <span className="text-rakura-muted font-display font-bold text-lg tracking-widest opacity-30">RAKURA</span>
+          </div>
         )}
       </div>
-      <div className="p-4 flex flex-col flex-1">
-        <h3 className="font-semibold text-foreground group-hover:text-rakura-gold transition-colors">{name}</h3>
+
+      {/* Card body */}
+      <div className="p-4 flex flex-col flex-1 border-t border-foreground/10 dark:border-white/10">
+        <h3 className="font-semibold text-foreground text-sm leading-snug group-hover:text-rakura-gold transition-colors">
+          {name}
+        </h3>
         {product.bagCount != null && (
-          <p className="text-sm text-rakura-muted mt-1">
-            {product.bagCount} {t.bags}
-          </p>
+          <p className="text-xs text-rakura-muted mt-1">{product.bagCount} {t.bags}</p>
         )}
         {product.weight != null && (
-          <p className="text-sm text-rakura-muted mt-1">
-            {t.weight}: {product.weight}
-          </p>
+          <p className="text-xs text-rakura-muted mt-1">{t.weight}: {product.weight}</p>
         )}
-        <p className="text-sm text-rakura-muted mt-2 line-clamp-2">{description}</p>
+        <p className="text-xs text-rakura-muted mt-2 line-clamp-2 leading-relaxed">{description}</p>
         <Link
           href={inquireUrl}
-          className="mt-4 inline-flex items-center justify-center rounded-xl border-2 border-rakura-gold text-rakura-gold font-medium px-4 py-2.5 text-sm hover:bg-rakura-gold/10 hover:shadow-gold transition-all duration-200 w-full sm:w-auto hover:scale-[1.02] active:scale-[0.98]"
+          className="mt-4 inline-flex items-center justify-center text-xs font-semibold tracking-wider uppercase border border-rakura-gold text-rakura-gold px-4 py-2 hover:bg-rakura-gold hover:text-rakura-dark transition-all duration-200 w-full"
         >
           {t.inquire}
         </Link>

@@ -1,23 +1,21 @@
-// Collections: cropped from rendered PDF page 12 (2x2 grid: Noir, Emerald, Rouge, Blossoms).
+// Collections: clean individual box images cropped from the PDF collections overview page.
 const PDF_COLLECTION_IMAGES = [
-  "/assets/pdf/page12_crop0.png", // himalayan-noir
-  "/assets/pdf/page12_crop1.png", // himalayan-emerald
-  "/assets/pdf/page12_crop2.png", // himalayan-rouge
-  "/assets/pdf/page12_crop3.png", // himalayan-blossoms
+  "/assets/pdf/collection-noir.png",     // himalayan-noir (black & gold box)
+  "/assets/pdf/collection-emerald.png",  // himalayan-emerald (teal box)
+  "/assets/pdf/collection-rouge.png",    // himalayan-rouge (red box)
+  "/assets/pdf/collection-blossoms.png", // himalayan-blossoms (cream/tan box)
 ];
-// First 6 Classic: cropped from rendered PDF page 13 (2x3 grid).
+// First 6 Classic teas: extracted from PDF page 14 individual product pages.
 const PDF_CLASSIC_EARLY_IMAGES = [
-  "/assets/pdf/page13_crop0.png", // classic-green (25 & 100)
-  "/assets/pdf/page13_crop1.png", // classic-breakfast-100
-  "/assets/pdf/page13_crop2.png", // english-breakfast-25
-  "/assets/pdf/page13_crop3.png", // organic-high-mountain-black
-  "/assets/pdf/page13_crop4.png", // pure-green-25
-  "/assets/pdf/page13_crop5.png", // pure-masala-25
+  "/assets/pdf/page14_img0.png", // classic-green (dark green box)
+  "/assets/pdf/page14_img1.png", // classic-breakfast-100 (yellow box)
+  "/assets/pdf/page14_img2.png", // english-breakfast-25 (pink/mauve box)
+  "/assets/pdf/page14_img3.png", // organic-high-mountain-black (dark navy box)
+  "/assets/pdf/page14_img4.png", // pure-green-25 (teal box)
+  "/assets/pdf/page14_img5.png", // pure-masala-25 (gold/tan box)
 ];
-// Product images extracted from Profile PDF (pages 14–20), from Earl Grey onward.
+// Remaining product images from PDF (pages 15–20), from Earl Grey onward.
 const PDF_PRODUCT_IMAGES = [
-  "/assets/pdf/page14_img0.png", "/assets/pdf/page14_img1.png", "/assets/pdf/page14_img2.png",
-  "/assets/pdf/page14_img3.png", "/assets/pdf/page14_img4.png", "/assets/pdf/page14_img5.png",
   "/assets/pdf/page15_img0.png", "/assets/pdf/page15_img1.png", "/assets/pdf/page15_img2.png",
   "/assets/pdf/page15_img3.png", "/assets/pdf/page15_img4.png", "/assets/pdf/page15_img5.png",
   "/assets/pdf/page16_img0.png", "/assets/pdf/page16_img1.png", "/assets/pdf/page16_img2.png",
