@@ -10,6 +10,20 @@ import { AnimateOnView } from "@/components/AnimateOnView";
 import { Marquee } from "@/components/Marquee";
 import { OriginMap } from "@/components/OriginMap";
 
+// Icons per 1NG feature
+const featureIcons: Record<string, string> = {
+  "plastic-free":   "🚫",
+  "cotton-thread":  "🌱",
+  "double-chamber": "🫖",
+  "compostable":    "♻️",
+  "food-grade-tags":"🏷️",
+  "packaging":      "📦",
+  "freshness":      "❄️",
+  "clean-room":     "🔬",
+  "neutrality":     "🌍",
+  "natural":        "☘️",
+};
+
 export default function HomePage({ params }: { params: { locale: string } }) {
   const locale = params.locale as Locale;
   const t = getTranslations(locale).home;
@@ -391,26 +405,70 @@ export default function HomePage({ params }: { params: { locale: string } }) {
             ))}
           </div>
 
-          {/* 1NG teabag section */}
+          {/* ── 1NG Teabag Innovation — Horizontal Scroll Strip ── */}
           <AnimateOnView animation="fade-in-up">
-            <div className="border border-white/10 rounded-sm overflow-hidden">
-              <div className="bg-white/5 px-6 py-4 border-b border-white/10">
-                <h3 className="text-white font-display font-semibold text-xl">
-                  {locale === "th" ? "นวัตกรรมซองชา 1NG" : "1NG Teabag Innovation"}
-                </h3>
+            <div className="mt-4 pt-14 border-t border-white/10">
+
+              {/* Header row */}
+              <div className="flex items-end justify-between mb-8">
+                <div>
+                  <p className="text-xs tracking-widest uppercase text-rakura-gold font-semibold mb-2">
+                    {isEn ? "Among The World's First" : "หนึ่งในรายแรกของโลก"}
+                  </p>
+                  <h3 className="font-display font-semibold text-white text-2xl sm:text-3xl">
+                    {isEn ? "1NG Teabag Innovation" : "นวัตกรรมซองชา 1NG"}
+                  </h3>
+                </div>
+                <span className="text-white/30 text-xs flex items-center gap-1.5 shrink-0 ml-6 pb-1">
+                  {isEn ? "Scroll" : "เลื่อนดู"}
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
+                </span>
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px bg-white/10">
-                {features1NG.map((f) => (
-                  <div key={f.id} className="bg-rakura-dark/90 p-5">
-                    <h4 className="font-medium text-white text-sm mb-1">
-                      {locale === "th" ? f.titleTh : f.titleEn}
-                    </h4>
-                    <p className="text-white/50 text-xs leading-relaxed line-clamp-2">
-                      {locale === "th" ? f.descriptionTh : f.descriptionEn}
-                    </p>
-                  </div>
-                ))}
+
+              {/* Scroll container */}
+              <div className="relative">
+                {/* Right-edge fade — indicates more content */}
+                <div className="absolute right-0 top-0 bottom-3 w-24 bg-gradient-to-l from-black/90 to-transparent z-10 pointer-events-none rounded-sm" />
+
+                <div className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                  {features1NG.map((f, i) => (
+                    <div
+                      key={f.id}
+                      className="snap-start shrink-0 w-56 sm:w-64 border border-white/10 bg-white/5 p-6 flex flex-col hover:border-rakura-gold/50 hover:bg-white/10 transition-all duration-300 group"
+                    >
+                      {/* Large dim number — background decoration */}
+                      <p className="font-display font-bold text-6xl leading-none text-white/[0.06] mb-3 select-none tracking-tight">
+                        {String(i + 1).padStart(2, "0")}
+                      </p>
+                      {/* Icon */}
+                      <span className="text-2xl mb-4 block">{featureIcons[f.id] ?? "✦"}</span>
+                      {/* Title */}
+                      <h4 className="font-semibold text-white text-sm mb-2 leading-snug group-hover:text-rakura-gold transition-colors duration-200 flex-none">
+                        {isEn ? f.titleEn : f.titleTh}
+                      </h4>
+                      {/* Description */}
+                      <p className="text-white/45 text-xs leading-relaxed mt-auto pt-3 border-t border-white/10">
+                        {isEn ? f.descriptionEn : f.descriptionTh}
+                      </p>
+                    </div>
+                  ))}
+                  {/* End spacer so last card doesn't sit against the fade */}
+                  <div className="shrink-0 w-12" />
+                </div>
+
+                {/* Thin progress rail — decorative, shows total card count */}
+                <div className="flex gap-px mt-2">
+                  {features1NG.map((f) => (
+                    <div key={f.id} className="h-px flex-1 bg-white/10" />
+                  ))}
+                </div>
+                <p className="text-white/20 text-[10px] tracking-widest uppercase mt-1.5">
+                  {features1NG.length} {isEn ? "innovations" : "นวัตกรรม"}
+                </p>
               </div>
+
             </div>
           </AnimateOnView>
 
