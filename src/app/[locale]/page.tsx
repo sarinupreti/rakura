@@ -9,6 +9,7 @@ import { ContactSection } from "@/components/ContactSection";
 import { AnimateOnView } from "@/components/AnimateOnView";
 import { Marquee } from "@/components/Marquee";
 import { OriginMap } from "@/components/OriginMap";
+import { CountUp } from "@/components/CountUp";
 
 // Icons per 1NG feature
 const featureIcons: Record<string, string> = {
@@ -97,13 +98,15 @@ export default function HomePage({ params }: { params: { locale: string } }) {
       <section className="bg-rakura-dark border-b border-white/10">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 py-10 grid grid-cols-2 sm:grid-cols-4 gap-px bg-white/10">
           {[
-            { num: "70+", label: isEn ? "Years Heritage" : "ปีแห่งมรดก" },
-            { num: "50+", label: isEn ? "Tea Varieties" : "สายพันธุ์ชา" },
-            { num: "30+", label: isEn ? "Countries Exported" : "ประเทศที่ส่งออก" },
-            { num: "100%", label: isEn ? "Natural Ingredients" : "ส่วนผสมธรรมชาติ" },
-          ].map(({ num, label }) => (
+            { end: 70, suffix: "+", label: isEn ? "Years Heritage" : "ปีแห่งมรดก" },
+            { end: 50, suffix: "+", label: isEn ? "Tea Varieties" : "สายพันธุ์ชา" },
+            { end: 30, suffix: "+", label: isEn ? "Countries Exported" : "ประเทศที่ส่งออก" },
+            { end: 100, suffix: "%", label: isEn ? "Natural Ingredients" : "ส่วนผสมธรรมชาติ" },
+          ].map(({ end, suffix, label }) => (
             <div key={label} className="bg-rakura-dark text-center px-4 py-6 sm:py-8">
-              <p className="font-display font-bold text-rakura-gold text-3xl sm:text-4xl">{num}</p>
+              <p className="font-display font-bold text-rakura-gold text-3xl sm:text-4xl">
+                <CountUp end={end} suffix={suffix} />
+              </p>
               <p className="text-white/60 text-xs tracking-widest uppercase mt-2">{label}</p>
             </div>
           ))}
