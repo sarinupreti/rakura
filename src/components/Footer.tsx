@@ -56,7 +56,7 @@ export function Footer({ locale }: { locale: Locale }) {
             <p className="font-semibold text-white">{t.follow}</p>
             <div className="flex gap-4 mt-3">
               <a
-                href={process.env.NEXT_PUBLIC_LINE_URL || "#"}
+                href={contact.thailand.lineUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-sm text-rakura-gold-light hover:underline transition-opacity hover:opacity-90"
@@ -64,7 +64,7 @@ export function Footer({ locale }: { locale: Locale }) {
                 Line
               </a>
               <a
-                href={process.env.NEXT_PUBLIC_WHATSAPP_URL || "https://wa.me/66"}
+                href={contact.thailand.whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-sm text-rakura-gold-light hover:underline transition-opacity hover:opacity-90"
