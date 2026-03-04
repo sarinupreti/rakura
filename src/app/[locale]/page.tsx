@@ -129,7 +129,7 @@ export default function HomePage({ params }: { params: { locale: string } }) {
       <section className="overflow-hidden">
         <div className="grid grid-cols-1 md:grid-cols-2">
           {/* Text */}
-          <div className="bg-rakura-crimson text-white px-8 sm:px-14 py-16 flex flex-col justify-center">
+          <div className="bg-rakura-dark text-white px-8 sm:px-14 py-16 flex flex-col justify-center">
             <AnimateOnView animation="fade-in-up">
               <p className="eyebrow text-white/70 mb-4">
                 {isEn ? "The Pioneer" : "ผู้บุกเบิก"}
