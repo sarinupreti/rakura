@@ -20,18 +20,6 @@ const brewingGuide: Record<string, { temp: string; time: string; amount: string 
   presenters:  { temp: "90–95°C", time: "3–4 min", amount: "1 bag / 200ml" },
 };
 
-function RatingBar({ value, max = 5, color = "bg-rakura-gold" }: { value: number; max?: number; color?: string }) {
-  return (
-    <div className="flex gap-1">
-      {Array.from({ length: max }).map((_, i) => (
-        <div
-          key={i}
-          className={`h-1.5 flex-1 rounded-full ${i < value ? color : "bg-stone-200"}`}
-        />
-      ))}
-    </div>
-  );
-}
 
 const caffeineColors: Record<string, string> = {
   none: "bg-stone-200 text-stone-600",
