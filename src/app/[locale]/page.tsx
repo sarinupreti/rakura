@@ -375,7 +375,7 @@ export default function HomePage({ params }: { params: { locale: string } }) {
           className="object-cover object-center"
           sizes="100vw"
         />
-        <div className="absolute inset-0 bg-black/88" />
+        <div className="absolute inset-0 bg-black/95" />
 
         <div className="relative z-10 max-w-5xl mx-auto">
           <AnimateOnView animation="fade-in-up">

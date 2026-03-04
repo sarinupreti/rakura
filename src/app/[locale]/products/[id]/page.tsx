@@ -150,22 +150,52 @@ export default function ProductDetailPage({
                 )}
               </div>
 
-              {/* Taste profile bars */}
+              {/* Taste profile — 3-column editorial grid */}
               {tea && (
-                <div className="bg-stone-50 rounded-sm p-4 space-y-3">
-                  <p className="text-xs font-semibold tracking-widest uppercase text-rakura-gold mb-3">
-                    {isEn ? "Taste Profile" : "โปรไฟล์รสชาติ"}
-                  </p>
-                  {[
-                    { label: isEn ? "Strength" : "ความเข้มข้น", val: tea.strength },
-                    { label: isEn ? "Antioxidants" : "สารต้านอนุมูลอิสระ", val: tea.antioxidants },
-                    { label: isEn ? "Sweetness" : "ความหวาน", val: tea.sweetness },
-                  ].map(({ label, val }) => (
-                    <div key={label} className="flex items-center gap-3">
-                      <span className="text-xs text-rakura-muted w-28 shrink-0">{label}</span>
-                      <RatingBar value={val} />
-                    </div>
-                  ))}
+                <div className="border border-stone-200 rounded-sm overflow-hidden">
+                  <div className="bg-stone-50 border-b border-stone-200 px-5 py-3">
+                    <p className="text-[10px] font-semibold tracking-widest uppercase text-rakura-gold">
+                      {isEn ? "Taste Profile" : "โปรไฟล์รสชาติ"}
+                    </p>
+                  </div>
+                  <div className="grid grid-cols-3 divide-x divide-stone-200">
+                    {[
+                      { labelEn: "Strength",     labelTh: "ความเข้มข้น",           val: tea.strength },
+                      { labelEn: "Antioxidants", labelTh: "สารต้านอนุมูลอิสระ",    val: tea.antioxidants },
+                      { labelEn: "Sweetness",    labelTh: "ความหวาน",              val: tea.sweetness },
+                    ].map(({ labelEn, labelTh, val }) => (
+                      <div key={labelEn} className="flex flex-col items-center text-center px-3 py-6">
+                        <p className="text-[9px] font-semibold tracking-widest uppercase text-stone-400 mb-4">
+                          {isEn ? labelEn : labelTh}
+                        </p>
+                        <div className="flex items-baseline gap-0.5 mb-4">
+                          <span className="font-display font-bold text-4xl text-foreground leading-none">{val}</span>
+                          <span className="text-xs text-stone-300 font-normal leading-none mb-0.5">/5</span>
+                        </div>
+                        <div className="flex gap-1.5">
+                          {Array.from({ length: 5 }).map((_, i) => (
+                            <div
+                              key={i}
+                              className={`w-2 h-2 rounded-full transition-colors ${
+                                i < val ? "bg-rakura-gold" : "bg-stone-200"
+                              }`}
+                            />
+                          ))}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  {/* Full-width fill bar at base */}
+                  <div className="grid grid-cols-3 divide-x divide-stone-200 border-t border-stone-200">
+                    {[tea.strength, tea.antioxidants, tea.sweetness].map((val, i) => (
+                      <div key={i} className="h-1 bg-stone-100">
+                        <div
+                          className="h-full bg-rakura-gold"
+                          style={{ width: `${(val / 5) * 100}%` }}
+                        />
+                      </div>
+                    ))}
+                  </div>
                 </div>
               )}
 
