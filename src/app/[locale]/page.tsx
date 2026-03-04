@@ -9,6 +9,8 @@ import { ContactSection } from "@/components/ContactSection";
 import { AnimateOnView } from "@/components/AnimateOnView";
 import { Marquee } from "@/components/Marquee";
 import { OriginMap } from "@/components/OriginMap";
+import { CountUp } from "@/components/CountUp";
+import { ParallaxImage } from "@/components/ParallaxImage";
 
 // Icons per 1NG feature
 const featureIcons: Record<string, string> = {
@@ -36,14 +38,16 @@ export default function HomePage({ params }: { params: { locale: string } }) {
     <div>
       {/* ── HERO ── full-screen with tea garden image */}
       <section id="hero" className="relative min-h-[100svh] flex items-center justify-center overflow-hidden scroll-mt-0">
-        <Image
-          src="/assets/pdf/page23_large_0.png"
-          alt="Himalayan tea gardens"
-          fill
-          priority
-          className="object-cover object-[50%_40%]"
-          sizes="100vw"
-        />
+        <ParallaxImage>
+          <Image
+            src="/assets/pdf/page23_large_0.png"
+            alt="Himalayan tea gardens"
+            fill
+            priority
+            className="object-cover object-[50%_40%]"
+            sizes="100vw"
+          />
+        </ParallaxImage>
         {/* Layered overlay for depth */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/80" />
         <div className="absolute inset-0 bg-rakura-dark/20" />
@@ -97,13 +101,15 @@ export default function HomePage({ params }: { params: { locale: string } }) {
       <section className="bg-rakura-dark border-b border-white/10">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 py-10 grid grid-cols-2 sm:grid-cols-4 gap-px bg-white/10">
           {[
-            { num: "70+", label: isEn ? "Years Heritage" : "ปีแห่งมรดก" },
-            { num: "50+", label: isEn ? "Tea Varieties" : "สายพันธุ์ชา" },
-            { num: "30+", label: isEn ? "Countries Exported" : "ประเทศที่ส่งออก" },
-            { num: "100%", label: isEn ? "Natural Ingredients" : "ส่วนผสมธรรมชาติ" },
-          ].map(({ num, label }) => (
+            { end: 70, suffix: "+", label: isEn ? "Years Heritage" : "ปีแห่งมรดก" },
+            { end: 50, suffix: "+", label: isEn ? "Tea Varieties" : "สายพันธุ์ชา" },
+            { end: 30, suffix: "+", label: isEn ? "Countries Exported" : "ประเทศที่ส่งออก" },
+            { end: 100, suffix: "%", label: isEn ? "Natural Ingredients" : "ส่วนผสมธรรมชาติ" },
+          ].map(({ end, suffix, label }) => (
             <div key={label} className="bg-rakura-dark text-center px-4 py-6 sm:py-8">
-              <p className="font-display font-bold text-rakura-gold text-3xl sm:text-4xl">{num}</p>
+              <p className="font-display font-bold text-rakura-gold text-3xl sm:text-4xl">
+                <CountUp end={end} suffix={suffix} />
+              </p>
               <p className="text-white/60 text-xs tracking-widest uppercase mt-2">{label}</p>
             </div>
           ))}

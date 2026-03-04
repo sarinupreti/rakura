@@ -87,6 +87,18 @@ export function Header({ locale }: { locale: Locale }) {
 
         {/* Right utilities */}
         <div className="flex items-center gap-3">
+          {/* Search icon */}
+          <Link
+            href={`${base}/search`}
+            title={locale === "en" ? "Search" : "ค้นหา"}
+            className="flex items-center justify-center w-8 h-8 text-white/70 hover:text-white transition-colors"
+          >
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+              <circle cx="11" cy="11" r="8" />
+              <path d="M21 21l-4.35-4.35" />
+            </svg>
+          </Link>
+
           {/* Basket icon */}
           <Link
             href={`${base}/basket`}

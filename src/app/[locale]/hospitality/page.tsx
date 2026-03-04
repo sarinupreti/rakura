@@ -3,6 +3,7 @@ import Image from "next/image";
 import type { Locale } from "@/lib/i18n";
 import { AnimateOnView } from "@/components/AnimateOnView";
 import { contact } from "@/data/contact";
+import { AmenityCalculator } from "@/components/AmenityCalculator";
 
 export default function HospitalityPage({ params }: { params: { locale: string } }) {
   const locale = params.locale as Locale;
@@ -238,6 +239,9 @@ export default function HospitalityPage({ params }: { params: { locale: string }
           </div>
         </div>
       </section>
+
+      {/* ── AMENITY CALCULATOR ── */}
+      <AmenityCalculator locale={locale} />
 
       {/* ── HOW IT WORKS ── */}
       <section className="py-20 sm:py-28 px-4 bg-stone-50 border-y border-stone-200">

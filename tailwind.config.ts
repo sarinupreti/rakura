@@ -53,6 +53,11 @@ const config: Config = {
           "0%": { opacity: "0", transform: "translateY(100%)" },
           "100%": { opacity: "1", transform: "translateY(0)" },
         },
+        // Subtle page-to-page transition — used by template.tsx
+        "page-enter": {
+          "0%": { opacity: "0", transform: "translateY(10px)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
+        },
       },
       animation: {
         "fade-in": "fade-in 0.5s ease-out both",
@@ -61,6 +66,7 @@ const config: Config = {
         "scale-in": "scale-in 0.4s ease-out both",
         "marquee": "marquee 30s linear infinite",
         "slide-up": "slide-up 0.35s ease-out both",
+        "page-enter": "page-enter 0.4s ease-out both",
       },
       boxShadow: {
         "soft": "0 2px 15px -3px rgb(0 0 0 / 0.07), 0 10px 20px -2px rgb(0 0 0 / 0.04)",
