@@ -44,7 +44,7 @@ export function ProductCard({ product, locale }: { product: Product; locale: Loc
   };
 
   return (
-    <article className="group flex flex-col rounded-sm border border-stone-200 bg-white overflow-hidden hover:border-rakura-gold hover:shadow-md hover:-translate-y-0.5 transition-all duration-300">
+    <article className="group h-full flex flex-col rounded-sm border border-stone-200 bg-white overflow-hidden hover:border-rakura-gold hover:shadow-md hover:-translate-y-0.5 transition-all duration-300">
       {/* Category colour dot + label */}
       <div className={`flex items-center gap-1.5 px-3 pt-2.5 pb-0`}>
         <span className={`w-2 h-2 rounded-full shrink-0 ${catStyle.dot}`} />
@@ -100,9 +100,10 @@ export function ProductCard({ product, locale }: { product: Product; locale: Loc
           {product.weight != null && (
             <p className="text-xs text-rakura-gold mt-1 tracking-wide font-medium">{product.weight}</p>
           )}
-          {showDescription && (
-            <p className="text-xs text-stone-500 mt-2 line-clamp-2 leading-relaxed">{description}</p>
-          )}
+          {/* Always reserve 2-line height so cards align regardless of description content */}
+          <p className="text-xs text-stone-500 mt-2 line-clamp-2 leading-relaxed min-h-[2.5rem]">
+            {showDescription ? description : ""}
+          </p>
         </Link>
 
         {/* Action buttons */}
