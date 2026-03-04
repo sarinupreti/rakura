@@ -106,14 +106,16 @@ export function ProductsSection({ locale }: { locale: Locale }) {
           </div>
         </AnimateOnView>
 
-        {/* ── Horizontal shelf ── */}
-        <AnimateOnView animation="fade-in-up" delay={100}>
-          <ProductShelf
-            products={shelfProducts}
-            locale={locale}
-            label={shelfLabel}
-          />
-        </AnimateOnView>
+        {/* ── Horizontal shelf — only shown for "All" to avoid repeating the filtered grid ── */}
+        {activeCategory === "all" && (
+          <AnimateOnView animation="fade-in-up" delay={100}>
+            <ProductShelf
+              products={shelfProducts}
+              locale={locale}
+              label={shelfLabel}
+            />
+          </AnimateOnView>
+        )}
 
         {/* ── Divider with product count ── */}
         <div className="flex items-center gap-4 my-8">

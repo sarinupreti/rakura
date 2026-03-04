@@ -22,10 +22,10 @@ const brewingGuide: Record<string, { temp: string; time: string; amount: string 
 
 
 const caffeineColors: Record<string, string> = {
-  none: "bg-stone-200 text-stone-600",
-  low: "bg-green-100 text-green-700",
-  medium: "bg-amber-100 text-amber-700",
-  high: "bg-red-100 text-red-700",
+  none:   "bg-stone-200 dark:bg-white/10 text-stone-600 dark:text-white/60",
+  low:    "bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-400",
+  medium: "bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-400",
+  high:   "bg-red-100 dark:bg-red-900/40 text-red-700 dark:text-red-400",
 };
 
 export default function ProductDetailPage({
@@ -63,7 +63,7 @@ export default function ProductDetailPage({
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-20 items-start">
           {/* Image */}
           <AnimateOnView animation="fade-in-up">
-            <div className="aspect-[3/4] relative bg-stone-50 rounded-sm overflow-hidden max-w-sm mx-auto w-full">
+            <div className="aspect-[3/4] relative bg-stone-50 dark:bg-stone-900 rounded-sm overflow-hidden max-w-sm mx-auto w-full border border-stone-200 dark:border-white/10">
               {hasImage ? (
                 <Image
                   src={product.image!}
@@ -75,7 +75,7 @@ export default function ProductDetailPage({
                 />
               ) : (
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="text-stone-300 font-display font-bold text-2xl tracking-widest">RAKURA</span>
+                  <span className="text-stone-300 dark:text-white/20 font-display font-bold text-2xl tracking-widest">RAKURA</span>
                 </div>
               )}
             </div>
@@ -140,32 +140,32 @@ export default function ProductDetailPage({
 
               {/* Taste profile — 3-column editorial grid */}
               {tea && (
-                <div className="border border-stone-200 rounded-sm overflow-hidden">
-                  <div className="bg-stone-50 border-b border-stone-200 px-5 py-3">
+                <div className="border border-stone-200 dark:border-white/10 rounded-sm overflow-hidden">
+                  <div className="bg-stone-50 dark:bg-white/5 border-b border-stone-200 dark:border-white/10 px-5 py-3">
                     <p className="text-[10px] font-semibold tracking-widest uppercase text-rakura-gold">
                       {isEn ? "Taste Profile" : "โปรไฟล์รสชาติ"}
                     </p>
                   </div>
-                  <div className="grid grid-cols-3 divide-x divide-stone-200">
+                  <div className="grid grid-cols-3 divide-x divide-stone-200 dark:divide-white/10">
                     {[
                       { labelEn: "Strength",     labelTh: "ความเข้มข้น",           val: tea.strength },
                       { labelEn: "Antioxidants", labelTh: "สารต้านอนุมูลอิสระ",    val: tea.antioxidants },
                       { labelEn: "Sweetness",    labelTh: "ความหวาน",              val: tea.sweetness },
                     ].map(({ labelEn, labelTh, val }) => (
                       <div key={labelEn} className="flex flex-col items-center text-center px-3 py-6">
-                        <p className="text-[9px] font-semibold tracking-widest uppercase text-stone-400 mb-4">
+                        <p className="text-[9px] font-semibold tracking-widest uppercase text-stone-400 dark:text-white/40 mb-4">
                           {isEn ? labelEn : labelTh}
                         </p>
                         <div className="flex items-baseline gap-0.5 mb-4">
                           <span className="font-display font-bold text-4xl text-foreground leading-none">{val}</span>
-                          <span className="text-xs text-stone-300 font-normal leading-none mb-0.5">/5</span>
+                          <span className="text-xs text-stone-300 dark:text-white/25 font-normal leading-none mb-0.5">/5</span>
                         </div>
                         <div className="flex gap-1.5">
                           {Array.from({ length: 5 }).map((_, i) => (
                             <div
                               key={i}
                               className={`w-2 h-2 rounded-full transition-colors ${
-                                i < val ? "bg-rakura-gold" : "bg-stone-200"
+                                i < val ? "bg-rakura-gold" : "bg-stone-200 dark:bg-white/15"
                               }`}
                             />
                           ))}
@@ -174,9 +174,9 @@ export default function ProductDetailPage({
                     ))}
                   </div>
                   {/* Full-width fill bar at base */}
-                  <div className="grid grid-cols-3 divide-x divide-stone-200 border-t border-stone-200">
+                  <div className="grid grid-cols-3 divide-x divide-stone-200 dark:divide-white/10 border-t border-stone-200 dark:border-white/10">
                     {[tea.strength, tea.antioxidants, tea.sweetness].map((val, i) => (
-                      <div key={i} className="h-1 bg-stone-100">
+                      <div key={i} className="h-1 bg-stone-100 dark:bg-white/10">
                         <div
                           className="h-full bg-rakura-gold"
                           style={{ width: `${(val / 5) * 100}%` }}
@@ -188,11 +188,11 @@ export default function ProductDetailPage({
               )}
 
               {/* Brewing guide */}
-              <div className="bg-stone-50 rounded-sm p-5 space-y-3">
+              <div className="bg-stone-50 dark:bg-white/5 border border-stone-200 dark:border-white/10 rounded-sm p-5 space-y-3">
                 <p className="text-xs font-semibold tracking-widest uppercase text-rakura-gold">
                   {isEn ? "Brewing Guide" : "วิธีชงชา"}
                 </p>
-                <div className="grid grid-cols-3 gap-4">
+                <div className="grid grid-cols-3 gap-4 divide-x divide-stone-200 dark:divide-white/10">
                   {[
                     { label: isEn ? "Temperature" : "อุณหภูมิ", value: brewing.temp },
                     { label: isEn ? "Steep Time" : "เวลาชง", value: brewing.time },
@@ -247,7 +247,7 @@ export default function ProductDetailPage({
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
                 {tea.benefits.map((b, i) => (
-                  <div key={i} className="bg-stone-50 rounded-sm p-5 flex flex-col gap-3 hover:shadow-soft transition-shadow">
+                  <div key={i} className="bg-stone-50 dark:bg-white/5 border border-stone-200 dark:border-white/10 rounded-sm p-5 flex flex-col gap-3 hover:shadow-soft transition-shadow">
                     <span className="text-2xl">{b.icon}</span>
                     <h3 className="font-semibold text-foreground text-sm">
                       {isEn ? b.titleEn : b.titleTh}
