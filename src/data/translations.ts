@@ -8,6 +8,9 @@ export const translations = {
       ourStory: "เรื่องราวของเรา",
       sustainability: "ความยั่งยืนและคุณภาพ",
       contact: "ติดต่อเรา",
+      quiz: "ค้นหาชาของคุณ",
+      hospitality: "โรงแรม & สปา",
+      basket: "ตะกร้าสอบถาม",
     },
     home: {
       heroTitle: "ชาชั้นเลิศจากหิมาลัย",
@@ -94,6 +97,9 @@ export const translations = {
       ourStory: "Our Story",
       sustainability: "Sustainability & Quality",
       contact: "Contact",
+      quiz: "Tea Quiz",
+      hospitality: "Hospitality",
+      basket: "Enquiry Basket",
     },
     home: {
       heroTitle: "The Finest Himalayan Teas",

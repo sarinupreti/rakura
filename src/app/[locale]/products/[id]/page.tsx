@@ -5,6 +5,7 @@ import { getProductById, products } from "@/data/products";
 import { getTeaProfile } from "@/data/teaData";
 import type { Locale } from "@/lib/i18n";
 import { AnimateOnView } from "@/components/AnimateOnView";
+import { AddToBasketButton } from "@/components/AddToBasketButton";
 
 export function generateStaticParams() {
   return products.map((p) => ({ id: p.id }));
@@ -195,6 +196,16 @@ export default function ProductDetailPage({
                 >
                   {isEn ? "Enquire About This Product" : "สอบถามสินค้านี้"}
                 </Link>
+                <AddToBasketButton
+                  item={{
+                    id: product.id,
+                    nameEn: product.nameEn,
+                    nameTh: product.nameTh,
+                    image: product.image,
+                    category: product.category,
+                  }}
+                  locale={locale}
+                />
                 <Link
                   href={`/${locale}#products`}
                   className="inline-flex items-center justify-center border border-foreground/20 text-foreground text-xs font-semibold tracking-wider uppercase py-3.5 px-6 hover:border-foreground/40 transition-colors duration-200"

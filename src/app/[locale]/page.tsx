@@ -8,6 +8,7 @@ import { ProductsSection } from "@/components/ProductsSection";
 import { ContactSection } from "@/components/ContactSection";
 import { AnimateOnView } from "@/components/AnimateOnView";
 import { Marquee } from "@/components/Marquee";
+import { OriginMap } from "@/components/OriginMap";
 
 export default function HomePage({ params }: { params: { locale: string } }) {
   const locale = params.locale as Locale;
@@ -201,6 +202,9 @@ export default function HomePage({ params }: { params: { locale: string } }) {
                 <p className="eyebrow mb-3">{isEn ? "Himalayan Origin" : "ต้นกำเนิดหิมาลัย"}</p>
                 <h3 className="font-semibold text-foreground text-xl mb-3">{tStory.himalayanTitle}</h3>
                 <p className="text-rakura-muted leading-relaxed text-sm">{tStory.himalayanLead}</p>
+                <div className="mt-8">
+                  <OriginMap locale={locale} />
+                </div>
               </div>
             </AnimateOnView>
           </div>
@@ -226,6 +230,59 @@ export default function HomePage({ params }: { params: { locale: string } }) {
                   <p className="text-xs text-rakura-muted leading-relaxed whitespace-pre-line">{label}</p>
                 </div>
               ))}
+            </div>
+          </AnimateOnView>
+        </div>
+      </section>
+
+      {/* ── TEA QUIZ CTA ── */}
+      <section className="bg-background border-b border-stone-200 py-16 sm:py-20 px-4 overflow-hidden">
+        <div className="max-w-4xl mx-auto">
+          <AnimateOnView animation="fade-in-up">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+              {/* Left: text */}
+              <div>
+                <p className="eyebrow mb-4">{isEn ? "Personalised for You" : "คำแนะนำเฉพาะคุณ"}</p>
+                <h2
+                  className="font-display font-bold text-foreground leading-tight mb-5"
+                  style={{ fontSize: "clamp(1.5rem, 3vw, 2.2rem)" }}
+                >
+                  {isEn
+                    ? "Not Sure Which Tea? Let Us Guide You."
+                    : "ยังไม่รู้จะเลือกชาไหน? ให้เราช่วยคุณ"}
+                </h2>
+                <p className="text-rakura-muted leading-relaxed mb-8 text-sm sm:text-base">
+                  {isEn
+                    ? "Answer 4 quick questions about your mood, time of day and wellness goals — we'll recommend your perfect Rakura tea."
+                    : "ตอบ 4 คำถามเกี่ยวกับอารมณ์ เวลา และเป้าหมายสุขภาพของคุณ เราจะแนะนำชา Rakura ที่เหมาะที่สุดสำหรับคุณ"}
+                </p>
+                <Link
+                  href={`/${locale}/quiz`}
+                  className="inline-flex items-center gap-2 bg-rakura-gold text-rakura-dark font-semibold text-sm tracking-wider uppercase px-8 py-3.5 hover:bg-rakura-gold-light transition-colors duration-200 shadow-gold"
+                >
+                  🍵 {isEn ? "Take the Tea Quiz" : "ทำแบบทดสอบชา"}
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
+                </Link>
+              </div>
+              {/* Right: visual cards */}
+              <div className="hidden md:grid grid-cols-2 gap-3">
+                {[
+                  { emoji: "⚡", labelEn: "Need energy?", labelTh: "ต้องการพลังงาน?" },
+                  { emoji: "🌙", labelEn: "Wind down?", labelTh: "อยากผ่อนคลาย?" },
+                  { emoji: "🛡️", labelEn: "Antioxidants?", labelTh: "สารต้านอนุมูล?" },
+                  { emoji: "🌱", labelEn: "Digestive aid?", labelTh: "ช่วยย่อยอาหาร?" },
+                ].map((card) => (
+                  <div
+                    key={card.labelEn}
+                    className="border border-stone-200 rounded-sm p-4 flex flex-col gap-2 hover:border-rakura-gold/40 transition-colors"
+                  >
+                    <span className="text-2xl">{card.emoji}</span>
+                    <span className="text-xs font-medium text-rakura-muted">{isEn ? card.labelEn : card.labelTh}</span>
+                  </div>
+                ))}
+              </div>
             </div>
           </AnimateOnView>
         </div>

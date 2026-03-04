@@ -7,13 +7,24 @@ import { usePathname } from "next/navigation";
 import type { Locale } from "@/lib/i18n";
 import { localeNames } from "@/lib/i18n";
 import { getTranslations } from "@/data/translations";
+import { useBasket } from "@/contexts/BasketContext";
 
-const navLinks = [
-  { href: "/", key: "home" as const, anchor: null },
-  { href: "/products", key: "products" as const, anchor: "products" },
-  { href: "/story", key: "ourStory" as const, anchor: "story" },
-  { href: "/sustainability", key: "sustainability" as const, anchor: "sustainability" },
-  { href: "/contact", key: "contact" as const, anchor: "contact" },
+type NavKey = "home" | "products" | "ourStory" | "sustainability" | "contact" | "quiz" | "hospitality";
+
+interface NavLink {
+  key: NavKey;
+  anchor: string | null;
+  page: string | null;
+}
+
+const navLinks: NavLink[] = [
+  { key: "home", anchor: null, page: null },
+  { key: "products", anchor: "products", page: null },
+  { key: "ourStory", anchor: "story", page: null },
+  { key: "sustainability", anchor: "sustainability", page: null },
+  { key: "contact", anchor: "contact", page: null },
+  { key: "quiz", anchor: null, page: "quiz" },
+  { key: "hospitality", anchor: null, page: "hospitality" },
 ];
 
 export function Header({ locale }: { locale: Locale }) {
@@ -22,6 +33,7 @@ export function Header({ locale }: { locale: Locale }) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const t = getTranslations(locale).nav;
   const base = `/${locale}`;
+  const { count } = useBasket();
 
   return (
     <header className="sticky top-0 z-50 bg-rakura-dark/95 backdrop-blur-md border-b border-white/10 shadow-sm">
@@ -41,24 +53,47 @@ export function Header({ locale }: { locale: Locale }) {
               onError={() => setLogoFailed(true)}
             />
           ) : (
-            <span className="font-display font-bold tracking-wide">Rakura</span>
+            <span className="font-display font-bold tracking-wide text-white">Rakura</span>
           )}
         </Link>
 
         {/* Desktop nav */}
-        <nav className="hidden md:flex items-center gap-8">
-          {navLinks.map(({ href, key, anchor }) => {
-            const path = anchor ? `${base}#${anchor}` : base;
-            const isHome = href === "/";
-            const active = isHome && (pathname === base || pathname === `${base}/`);
+        <nav className="hidden md:flex items-center gap-5">
+          {navLinks.map(({ key, anchor, page }) => {
+            const path = page
+              ? `${base}/${page}`
+              : anchor
+              ? `${base}#${anchor}`
+              : base;
+
+            const isHome = key === "home";
+            const active = page
+              ? pathname.includes(`/${page}`)
+              : isHome && (pathname === base || pathname === `${base}/`);
+
+            // Quiz gets a special gold pill style
+            if (key === "quiz") {
+              return (
+                <Link
+                  key={key}
+                  href={path}
+                  className={`text-xs font-semibold tracking-wider uppercase px-3 py-1.5 border transition-colors duration-200 ${
+                    active
+                      ? "border-rakura-gold bg-rakura-gold text-rakura-dark"
+                      : "border-rakura-gold/50 text-rakura-gold hover:border-rakura-gold hover:bg-rakura-gold/10"
+                  }`}
+                >
+                  🍵 {t[key]}
+                </Link>
+              );
+            }
+
             return (
               <Link
                 key={key}
                 href={path}
-                className={`text-sm font-medium tracking-wide transition-colors duration-200 ${
-                  active
-                    ? "text-rakura-gold"
-                    : "text-white/70 hover:text-white"
+                className={`text-xs font-medium tracking-wide transition-colors duration-200 ${
+                  active ? "text-rakura-gold" : "text-white/70 hover:text-white"
                 }`}
               >
                 {t[key]}
@@ -67,8 +102,28 @@ export function Header({ locale }: { locale: Locale }) {
           })}
         </nav>
 
-        <div className="flex items-center gap-4">
+        {/* Right utilities */}
+        <div className="flex items-center gap-3">
+          {/* Basket icon */}
+          <Link
+            href={`${base}/basket`}
+            title={t.basket}
+            className="relative flex items-center justify-center w-8 h-8 text-white/70 hover:text-white transition-colors"
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+              <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" />
+              <line x1="3" y1="6" x2="21" y2="6" />
+              <path d="M16 10a4 4 0 01-8 0" />
+            </svg>
+            {count > 0 && (
+              <span className="absolute -top-1 -right-1 bg-rakura-gold text-rakura-dark text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center leading-none">
+                {count > 9 ? "9+" : count}
+              </span>
+            )}
+          </Link>
+
           <LocaleSwitcher locale={locale} pathname={pathname} />
+
           {/* Mobile menu button */}
           <button
             type="button"
@@ -87,8 +142,12 @@ export function Header({ locale }: { locale: Locale }) {
       {mobileOpen && (
         <div className="md:hidden border-t border-white/10 bg-rakura-dark">
           <nav className="flex flex-col px-4 py-3 gap-1">
-            {navLinks.map(({ href, key, anchor }) => {
-              const path = anchor ? `${base}#${anchor}` : base;
+            {navLinks.map(({ key, anchor, page }) => {
+              const path = page
+                ? `${base}/${page}`
+                : anchor
+                ? `${base}#${anchor}`
+                : base;
               return (
                 <Link
                   key={key}
@@ -96,10 +155,22 @@ export function Header({ locale }: { locale: Locale }) {
                   onClick={() => setMobileOpen(false)}
                   className="py-2.5 text-sm font-medium text-white/70 hover:text-white transition-colors"
                 >
-                  {t[key]}
+                  {key === "quiz" ? `🍵 ${t[key]}` : t[key]}
                 </Link>
               );
             })}
+            <Link
+              href={`${base}/basket`}
+              onClick={() => setMobileOpen(false)}
+              className="py-2.5 text-sm font-medium text-white/70 hover:text-white transition-colors flex items-center gap-2"
+            >
+              🛒 {t.basket}
+              {count > 0 && (
+                <span className="bg-rakura-gold text-rakura-dark text-[10px] font-bold px-1.5 py-0.5 rounded-full">
+                  {count}
+                </span>
+              )}
+            </Link>
           </nav>
         </div>
       )}
