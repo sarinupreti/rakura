@@ -8,6 +8,8 @@ export function ProductCard({ product, locale }: { product: Product; locale: Loc
   const t = getTranslations(locale).products;
   const name = locale === "th" ? product.nameTh : product.nameEn;
   const description = locale === "th" ? product.shortDescriptionTh : product.shortDescriptionEn;
+  const isEn = locale === "en";
+  const productUrl = `/${locale}/products/${product.id}`;
   const inquireUrl = `/${locale}?product=${encodeURIComponent(product.id)}#contact`;
   const hasImage = product.image && !product.image.includes("placeholder");
 
@@ -35,6 +37,22 @@ export function ProductCard({ product, locale }: { product: Product; locale: Loc
             <span className="text-stone-300 font-display font-bold text-lg tracking-widest">RAKURA</span>
           </div>
         )}
+        {/* Hover overlay: tasting note */}
+        {product.tastingNoteEn && (
+          <div className="absolute inset-0 bg-rakura-dark/92 flex flex-col items-center justify-center p-5 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <p className="text-xs tracking-widest uppercase text-rakura-gold mb-3 font-semibold">
+              {locale === "th" ? "รสชาติ" : "Tasting Note"}
+            </p>
+            <p className="text-white text-xs text-center leading-relaxed italic">
+              {locale === "th" ? product.tastingNoteTh : product.tastingNoteEn}
+            </p>
+            {product.origin && (
+              <p className="text-white/40 text-xs mt-4 tracking-wide text-center">
+                {product.origin}
+              </p>
+            )}
+          </div>
+        )}
       </div>
 
       {/* Card body */}
@@ -51,12 +69,20 @@ export function ProductCard({ product, locale }: { product: Product; locale: Loc
         {showDescription && (
           <p className="text-xs text-stone-500 mt-2 line-clamp-2 leading-relaxed">{description}</p>
         )}
-        <Link
-          href={inquireUrl}
-          className="mt-4 inline-flex items-center justify-center text-xs font-semibold tracking-wider uppercase border border-rakura-gold text-rakura-gold px-4 py-2 hover:bg-rakura-gold hover:text-white transition-all duration-200 w-full"
-        >
-          {t.inquire}
-        </Link>
+        <div className="mt-4 flex gap-2">
+          <Link
+            href={productUrl}
+            className="flex-1 inline-flex items-center justify-center text-xs font-semibold tracking-wider uppercase border border-stone-200 text-stone-600 px-3 py-2 hover:border-rakura-gold hover:text-rakura-gold transition-all duration-200"
+          >
+            {isEn ? "Details" : "รายละเอียด"}
+          </Link>
+          <Link
+            href={inquireUrl}
+            className="flex-1 inline-flex items-center justify-center text-xs font-semibold tracking-wider uppercase border border-rakura-gold text-rakura-gold px-3 py-2 hover:bg-rakura-gold hover:text-white transition-all duration-200"
+          >
+            {t.inquire}
+          </Link>
+        </div>
       </div>
     </article>
   );

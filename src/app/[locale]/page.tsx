@@ -7,6 +7,7 @@ import { features1NG } from "@/data/features";
 import { ProductsSection } from "@/components/ProductsSection";
 import { ContactSection } from "@/components/ContactSection";
 import { AnimateOnView } from "@/components/AnimateOnView";
+import { Marquee } from "@/components/Marquee";
 
 export default function HomePage({ params }: { params: { locale: string } }) {
   const locale = params.locale as Locale;
@@ -71,6 +72,26 @@ export default function HomePage({ params }: { params: { locale: string } }) {
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
             <path d="M12 5v14M5 12l7 7 7-7" />
           </svg>
+        </div>
+      </section>
+
+      {/* ── MARQUEE ── */}
+      <Marquee locale={locale} variant="gold" />
+
+      {/* ── STATS STRIP ── */}
+      <section className="bg-rakura-dark border-b border-white/10">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 py-10 grid grid-cols-2 sm:grid-cols-4 gap-px bg-white/10">
+          {[
+            { num: "70+", label: isEn ? "Years Heritage" : "ปีแห่งมรดก" },
+            { num: "50+", label: isEn ? "Tea Varieties" : "สายพันธุ์ชา" },
+            { num: "30+", label: isEn ? "Countries Exported" : "ประเทศที่ส่งออก" },
+            { num: "100%", label: isEn ? "Natural Ingredients" : "ส่วนผสมธรรมชาติ" },
+          ].map(({ num, label }) => (
+            <div key={label} className="bg-rakura-dark text-center px-4 py-6 sm:py-8">
+              <p className="font-display font-bold text-rakura-gold text-3xl sm:text-4xl">{num}</p>
+              <p className="text-white/60 text-xs tracking-widest uppercase mt-2">{label}</p>
+            </div>
+          ))}
         </div>
       </section>
 
@@ -186,6 +207,30 @@ export default function HomePage({ params }: { params: { locale: string } }) {
         </div>
       </section>
 
+      {/* ── AWARDS / CERTIFICATIONS ── */}
+      <section className="bg-stone-50 border-y border-stone-200 py-8 overflow-hidden">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6">
+          <AnimateOnView animation="fade-in-up">
+            <p className="text-center text-xs tracking-widest uppercase text-rakura-muted mb-6">
+              {isEn ? "Certified & Recognised" : "รับรองและได้รับการยอมรับ"}
+            </p>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-8">
+              {[
+                { icon: "🏆", label: isEn ? "Nepal's Finest\nFood Safety & Quality" : "รางวัลมาตรฐาน\nความปลอดภัยอาหาร เนปาล" },
+                { icon: "🌿", label: isEn ? "FSC Certified\nSustainable Packaging" : "บรรจุภัณฑ์ยั่งยืน\nได้รับรอง FSC" },
+                { icon: "✅", label: isEn ? "100% Food Grade\nCompostable Teabags" : "ซองชาย่อยสลายได้\nเกรดอาหาร 100%" },
+                { icon: "🌍", label: isEn ? "Exported to\n30+ Countries" : "ส่งออกสู่\nกว่า 30 ประเทศ" },
+              ].map(({ icon, label }) => (
+                <div key={label} className="flex flex-col items-center text-center gap-2 py-2">
+                  <span className="text-2xl grayscale opacity-70">{icon}</span>
+                  <p className="text-xs text-rakura-muted leading-relaxed whitespace-pre-line">{label}</p>
+                </div>
+              ))}
+            </div>
+          </AnimateOnView>
+        </div>
+      </section>
+
       {/* ── COLLECTIONS ── dark showcase */}
       <section className="bg-rakura-dark py-20 sm:py-28 px-4">
         <div className="max-w-6xl mx-auto">
@@ -206,7 +251,7 @@ export default function HomePage({ params }: { params: { locale: string } }) {
             {collections.map((product, i) => (
               <AnimateOnView key={product.id} animation="scale-in" delay={i * 80}>
                 <Link
-                  href={`/${locale}#products`}
+                  href={`/${locale}/products/${product.id}`}
                   className="group block rounded-sm overflow-hidden border border-white/10 hover:border-rakura-gold/50 transition-all duration-300 hover:-translate-y-1"
                 >
                   <div className="aspect-[3/4] relative bg-stone-900 overflow-hidden flex items-center justify-center">
@@ -314,6 +359,9 @@ export default function HomePage({ params }: { params: { locale: string } }) {
 
         </div>
       </section>
+
+      {/* ── MARQUEE (dark variant) ── */}
+      <Marquee locale={locale} variant="dark" />
 
       {/* ── CONTACT ── */}
       <ContactSection locale={locale} />

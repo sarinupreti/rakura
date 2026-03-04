@@ -51,6 +51,9 @@ export interface Product {
   shortDescriptionEn: string;
   shortDescriptionTh: string;
   image?: string;
+  tastingNoteEn?: string;
+  tastingNoteTh?: string;
+  origin?: string;
 }
 
 export const products: Product[] = [
@@ -64,6 +67,9 @@ export const products: Product[] = [
     shortDescriptionEn: "A heavenly selection of high-grown black & breakfast teas.",
     shortDescriptionTh: "ชาดำและชาเบรกฟาสต์จากที่สูง คัดสรรอย่างดี",
     image: PDF_COLLECTION_IMAGES[0],
+    tastingNoteEn: "Bold & malty. Notes of amber honey and dark chocolate.",
+    tastingNoteTh: "เข้มข้น หอมมอลต์ กลิ่นน้ำผึ้งและช็อกโกแลตดำ",
+    origin: "Ilam & Jhapa, Nepal",
   },
   {
     id: "himalayan-rouge",
@@ -74,6 +80,9 @@ export const products: Product[] = [
     shortDescriptionEn: "A heavenly selection of high-grown green & black teas + delectable fruits.",
     shortDescriptionTh: "ชาเขียว ชาดำ และผลไม้จากที่สูง",
     image: PDF_COLLECTION_IMAGES[2],
+    tastingNoteEn: "Vibrant & fruity. Red berries, hibiscus, delicate green finish.",
+    tastingNoteTh: "สดชื่น หอมผลไม้ เบอร์รีแดง ดอกชบา จบด้วยชาเขียว",
+    origin: "Ilam, Nepal",
   },
   {
     id: "himalayan-emerald",
@@ -84,6 +93,9 @@ export const products: Product[] = [
     shortDescriptionEn: "A heavenly selection of high-grown green teas.",
     shortDescriptionTh: "ชาเขียวจากที่สูง คัดสรรอย่างดี",
     image: PDF_COLLECTION_IMAGES[1],
+    tastingNoteEn: "Light & grassy. Fresh spring water clarity with jasmine hints.",
+    tastingNoteTh: "เบาสบาย หอมหญ้า สดชื่นเหมือนน้ำพุ กลิ่นมะลิอ่อน",
+    origin: "Ilam, Nepal",
   },
   {
     id: "himalayan-blossoms",
@@ -94,6 +106,9 @@ export const products: Product[] = [
     shortDescriptionEn: "A heavenly selection of high-grown green teas + soothing flowers & herbs.",
     shortDescriptionTh: "ชาเขียวจากที่สูง และดอกไม้กับสมุนไพร",
     image: PDF_COLLECTION_IMAGES[3],
+    tastingNoteEn: "Delicate & floral. Wildflower honey, chamomile, alpine herbs.",
+    tastingNoteTh: "ละเอียดอ่อน หอมดอกไม้ น้ำผึ้งดอกป่า คาโมมายล์",
+    origin: "High-altitude gardens, Nepal",
   },
   // Classic & single-origin (25/100 bags)
   {

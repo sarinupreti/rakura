@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { locales, type Locale } from "@/lib/i18n";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { FloatingCTA } from "@/components/FloatingCTA";
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
@@ -39,6 +40,7 @@ export default function LocaleLayout({
       <Header locale={locale as Locale} />
       <main className="flex-1">{children}</main>
       <Footer locale={locale as Locale} />
+      <FloatingCTA />
     </>
   );
 }
