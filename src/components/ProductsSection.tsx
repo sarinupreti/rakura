@@ -13,6 +13,7 @@ import {
 import { ProductCard } from "@/components/ProductCard";
 import { ProductShelf } from "@/components/ProductShelf";
 import { AnimateOnView } from "@/components/AnimateOnView";
+import { TiltCard } from "@/components/TiltCard";
 
 const categoryKeys: Record<
   ProductCategory,
@@ -136,9 +137,9 @@ export function ProductsSection({ locale }: { locale: Locale }) {
               delay={(i % 5) * 60}
               className="h-full"
             >
-              <div className="h-full">
+              <TiltCard className="h-full">
                 <ProductCard product={product} locale={locale} />
-              </div>
+              </TiltCard>
             </AnimateOnView>
           ))}
         </div>

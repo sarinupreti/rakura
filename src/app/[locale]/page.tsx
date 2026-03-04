@@ -10,6 +10,7 @@ import { AnimateOnView } from "@/components/AnimateOnView";
 import { Marquee } from "@/components/Marquee";
 import { OriginMap } from "@/components/OriginMap";
 import { CountUp } from "@/components/CountUp";
+import { ParallaxImage } from "@/components/ParallaxImage";
 
 // Icons per 1NG feature
 const featureIcons: Record<string, string> = {
@@ -37,14 +38,16 @@ export default function HomePage({ params }: { params: { locale: string } }) {
     <div>
       {/* ── HERO ── full-screen with tea garden image */}
       <section id="hero" className="relative min-h-[100svh] flex items-center justify-center overflow-hidden scroll-mt-0">
-        <Image
-          src="/assets/pdf/page23_large_0.png"
-          alt="Himalayan tea gardens"
-          fill
-          priority
-          className="object-cover object-[50%_40%]"
-          sizes="100vw"
-        />
+        <ParallaxImage>
+          <Image
+            src="/assets/pdf/page23_large_0.png"
+            alt="Himalayan tea gardens"
+            fill
+            priority
+            className="object-cover object-[50%_40%]"
+            sizes="100vw"
+          />
+        </ParallaxImage>
         {/* Layered overlay for depth */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/80" />
         <div className="absolute inset-0 bg-rakura-dark/20" />
