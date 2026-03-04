@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { getProductById, products } from "@/data/products";
+import { getTeaProfile } from "@/data/teaData";
 import type { Locale } from "@/lib/i18n";
 import { AnimateOnView } from "@/components/AnimateOnView";
 
@@ -10,12 +11,32 @@ export function generateStaticParams() {
 }
 
 const brewingGuide: Record<string, { temp: string; time: string; amount: string }> = {
-  collections: { temp: "90–95°C", time: "3–4 min", amount: "1 teabag / 200ml" },
-  classic: { temp: "90–95°C", time: "3–4 min", amount: "1 teabag / 200ml" },
-  superHerbs: { temp: "95–100°C", time: "5–7 min", amount: "1 teabag / 250ml" },
-  selections: { temp: "85–90°C", time: "2–3 min", amount: "1 teabag / 200ml" },
-  looseLeaf: { temp: "90–95°C", time: "3–4 min", amount: "2–3g / 200ml" },
-  presenters: { temp: "90–95°C", time: "3–4 min", amount: "1 teabag / 200ml" },
+  collections: { temp: "90–95°C", time: "3–4 min", amount: "1 bag / 200ml" },
+  classic:     { temp: "90–95°C", time: "3–4 min", amount: "1 bag / 200ml" },
+  superHerbs:  { temp: "95–100°C", time: "5–7 min", amount: "1 bag / 250ml" },
+  selections:  { temp: "85–90°C", time: "2–3 min", amount: "1 bag / 200ml" },
+  looseLeaf:   { temp: "90–95°C", time: "3–4 min", amount: "2–3g / 200ml" },
+  presenters:  { temp: "90–95°C", time: "3–4 min", amount: "1 bag / 200ml" },
+};
+
+function RatingBar({ value, max = 5, color = "bg-rakura-gold" }: { value: number; max?: number; color?: string }) {
+  return (
+    <div className="flex gap-1">
+      {Array.from({ length: max }).map((_, i) => (
+        <div
+          key={i}
+          className={`h-1.5 flex-1 rounded-full ${i < value ? color : "bg-stone-200"}`}
+        />
+      ))}
+    </div>
+  );
+}
+
+const caffeineColors: Record<string, string> = {
+  none: "bg-stone-200 text-stone-600",
+  low: "bg-green-100 text-green-700",
+  medium: "bg-amber-100 text-amber-700",
+  high: "bg-red-100 text-red-700",
 };
 
 export default function ProductDetailPage({
@@ -33,6 +54,7 @@ export default function ProductDetailPage({
   const brewing = brewingGuide[product.category] ?? brewingGuide.classic;
   const inquireUrl = `/${locale}?product=${encodeURIComponent(product.id)}#contact`;
   const hasImage = product.image && !product.image.includes("placeholder");
+  const tea = getTeaProfile(product.teaType);
 
   return (
     <div className="min-h-screen bg-background">
@@ -48,6 +70,7 @@ export default function ProductDetailPage({
       </div>
 
       <div className="max-w-5xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
+        {/* ── TOP: Image + Core Details ── */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-20 items-start">
           {/* Image */}
           <AnimateOnView animation="fade-in-up">
@@ -71,22 +94,27 @@ export default function ProductDetailPage({
 
           {/* Details */}
           <AnimateOnView animation="fade-in-up" delay={80}>
-            <div className="flex flex-col gap-6">
+            <div className="flex flex-col gap-5">
               <div>
-                <p className="eyebrow mb-3">
-                  {isEn ? "Rakura Collection" : "คอลเลกชัน Rakura"}
-                </p>
+                <p className="eyebrow mb-3">{isEn ? "Rakura Tea" : "ชา Rakura"}</p>
                 <h1 className="font-display font-bold text-foreground leading-tight text-3xl sm:text-4xl section-heading">
                   {name}
                 </h1>
-                {product.bagCount != null && (
-                  <p className="text-rakura-gold text-sm font-medium mt-4 tracking-wide">
-                    {product.bagCount} {isEn ? "Bags" : "ซอง"}
-                  </p>
-                )}
-                {product.weight != null && (
-                  <p className="text-rakura-gold text-sm font-medium mt-2 tracking-wide">{product.weight}</p>
-                )}
+                <div className="flex flex-wrap items-center gap-3 mt-4">
+                  {product.bagCount != null && (
+                    <span className="text-rakura-gold text-sm font-medium tracking-wide">
+                      {product.bagCount} {isEn ? "Bags" : "ซอง"}
+                    </span>
+                  )}
+                  {product.weight != null && (
+                    <span className="text-rakura-gold text-sm font-medium tracking-wide">{product.weight}</span>
+                  )}
+                  {tea && (
+                    <span className={`text-xs font-semibold tracking-wider uppercase px-3 py-1 rounded-full ${caffeineColors[tea.caffeineLevel]}`}>
+                      {isEn ? tea.caffeineEn : tea.caffeineTh}
+                    </span>
+                  )}
+                </div>
               </div>
 
               <p className="text-rakura-muted leading-relaxed">{description}</p>
@@ -103,14 +131,40 @@ export default function ProductDetailPage({
                 </div>
               )}
 
-              {/* Origin */}
-              {product.origin && (
-                <div className="flex items-center gap-2 text-sm text-rakura-muted">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-rakura-gold shrink-0">
-                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" />
-                    <circle cx="12" cy="9" r="2.5" />
-                  </svg>
-                  {product.origin}
+              {/* Origin + best time */}
+              <div className="flex flex-wrap gap-4 text-sm text-rakura-muted">
+                {product.origin && (
+                  <div className="flex items-center gap-1.5">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-rakura-gold shrink-0">
+                      <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/>
+                    </svg>
+                    {product.origin}
+                  </div>
+                )}
+                {tea && (
+                  <div className="flex items-center gap-1.5">
+                    <span>{tea.bestTimeIcon}</span>
+                    <span>{isEn ? tea.bestTimeEn : tea.bestTimeTh}</span>
+                  </div>
+                )}
+              </div>
+
+              {/* Taste profile bars */}
+              {tea && (
+                <div className="bg-stone-50 rounded-sm p-4 space-y-3">
+                  <p className="text-xs font-semibold tracking-widest uppercase text-rakura-gold mb-3">
+                    {isEn ? "Taste Profile" : "โปรไฟล์รสชาติ"}
+                  </p>
+                  {[
+                    { label: isEn ? "Strength" : "ความเข้มข้น", val: tea.strength },
+                    { label: isEn ? "Antioxidants" : "สารต้านอนุมูลอิสระ", val: tea.antioxidants },
+                    { label: isEn ? "Sweetness" : "ความหวาน", val: tea.sweetness },
+                  ].map(({ label, val }) => (
+                    <div key={label} className="flex items-center gap-3">
+                      <span className="text-xs text-rakura-muted w-28 shrink-0">{label}</span>
+                      <RatingBar value={val} />
+                    </div>
+                  ))}
                 </div>
               )}
 
@@ -126,14 +180,14 @@ export default function ProductDetailPage({
                     { label: isEn ? "Amount" : "ปริมาณ", value: brewing.amount },
                   ].map(({ label, value }) => (
                     <div key={label} className="text-center">
-                      <p className="text-rakura-dark font-semibold text-sm">{value}</p>
+                      <p className="text-foreground font-semibold text-sm">{value}</p>
                       <p className="text-rakura-muted text-xs mt-1">{label}</p>
                     </div>
                   ))}
                 </div>
               </div>
 
-              {/* CTA */}
+              {/* CTAs */}
               <div className="flex flex-col sm:flex-row gap-3 pt-2">
                 <Link
                   href={inquireUrl}
@@ -151,6 +205,68 @@ export default function ProductDetailPage({
             </div>
           </AnimateOnView>
         </div>
+
+        {/* ── HEALTH BENEFITS ── */}
+        {tea && (
+          <AnimateOnView animation="fade-in-up" delay={120}>
+            <div className="mt-20 pt-16 border-t border-foreground/10">
+              <div className="text-center mb-10">
+                <p className="eyebrow mb-3">{isEn ? "Why This Tea" : "ประโยชน์ของชานี้"}</p>
+                <h2 className="font-display font-bold text-foreground text-2xl sm:text-3xl">
+                  {isEn ? "Health Benefits" : "ประโยชน์ต่อสุขภาพ"}
+                </h2>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                {tea.benefits.map((b, i) => (
+                  <div key={i} className="bg-stone-50 rounded-sm p-5 flex flex-col gap-3 hover:shadow-soft transition-shadow">
+                    <span className="text-2xl">{b.icon}</span>
+                    <h3 className="font-semibold text-foreground text-sm">
+                      {isEn ? b.titleEn : b.titleTh}
+                    </h3>
+                    <p className="text-rakura-muted text-xs leading-relaxed">
+                      {isEn ? b.descEn : b.descTh}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </AnimateOnView>
+        )}
+
+        {/* ── FOOD PAIRINGS ── */}
+        {tea && (
+          <AnimateOnView animation="fade-in-up" delay={160}>
+            <div className="mt-12 bg-rakura-dark rounded-sm p-8">
+              <p className="eyebrow mb-3" style={{ color: "var(--rakura-gold)" }}>
+                {isEn ? "Pairs Well With" : "เข้ากันได้ดีกับ"}
+              </p>
+              <div className="flex flex-wrap gap-3 mt-4">
+                {(isEn ? tea.pairingsEn : tea.pairingsTh).map((p) => (
+                  <span key={p} className="text-xs font-medium text-white/80 border border-white/20 rounded-full px-4 py-1.5">
+                    {p}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </AnimateOnView>
+        )}
+
+        {/* ── SUSTAINABILITY NOTE ── */}
+        <AnimateOnView animation="fade-in-up" delay={200}>
+          <div className="mt-8 flex items-start gap-4 border border-foreground/10 rounded-sm p-5">
+            <span className="text-xl shrink-0">🌿</span>
+            <div>
+              <p className="text-xs font-semibold tracking-widest uppercase text-rakura-gold mb-1">
+                {isEn ? "Sustainability" : "ความยั่งยืน"}
+              </p>
+              <p className="text-rakura-muted text-xs leading-relaxed">
+                {isEn
+                  ? "Packaged in FSC-certified, plastic-free, compostable Magic-knot teabags. From farm to cup, Rakura supports Nepalese tea farmers and sustainable highland agriculture."
+                  : "บรรจุในซองชา Magic-knot ที่ได้รับรอง FSC ปลอดพลาสติก และย่อยสลายได้ Rakura สนับสนุนเกษตรกรชาเนปาลและการเกษตรที่ยั่งยืน"}
+              </p>
+            </div>
+          </div>
+        </AnimateOnView>
       </div>
     </div>
   );
