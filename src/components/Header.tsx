@@ -58,7 +58,7 @@ export function Header({ locale }: { locale: Locale }) {
                 className={`text-sm font-medium tracking-wide transition-colors duration-200 ${
                   active
                     ? "text-rakura-gold"
-                    : "text-foreground/70 hover:text-foreground"
+                    : "text-white/70 hover:text-white"
                 }`}
               >
                 {t[key]}
@@ -94,7 +94,7 @@ export function Header({ locale }: { locale: Locale }) {
                   key={key}
                   href={path}
                   onClick={() => setMobileOpen(false)}
-                  className="py-2.5 text-sm font-medium text-foreground/70 hover:text-foreground transition-colors"
+                  className="py-2.5 text-sm font-medium text-white/70 hover:text-white transition-colors"
                 >
                   {t[key]}
                 </Link>

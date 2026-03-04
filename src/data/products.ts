@@ -1,9 +1,9 @@
 // Collections: clean individual box images cropped from the PDF collections overview page.
 const PDF_COLLECTION_IMAGES = [
-  "/assets/pdf/collection-noir.png",     // himalayan-noir (black & gold box)
-  "/assets/pdf/collection-emerald.png",  // himalayan-emerald (teal box)
-  "/assets/pdf/collection-rouge.png",    // himalayan-rouge (red box)
-  "/assets/pdf/collection-blossoms.png", // himalayan-blossoms (cream/tan box)
+  "/assets/pdf/collection-noir-transparent.png",     // himalayan-noir (black & gold box)
+  "/assets/pdf/collection-emerald-transparent.png",  // himalayan-emerald (teal box)
+  "/assets/pdf/collection-rouge-transparent.png",    // himalayan-rouge (red box)
+  "/assets/pdf/collection-blossoms-transparent.png", // himalayan-blossoms (cream/tan box)
 ];
 // First 6 Classic teas: extracted from PDF page 14 individual product pages.
 const PDF_CLASSIC_EARLY_IMAGES = [
