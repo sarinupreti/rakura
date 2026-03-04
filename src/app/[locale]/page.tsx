@@ -312,26 +312,6 @@ export default function HomePage({ params }: { params: { locale: string } }) {
             </div>
           </AnimateOnView>
 
-          <AnimateOnView animation="fade-in-up">
-            <div className="mt-10 max-w-2xl mx-auto">
-              <div className="bg-white rounded-sm overflow-hidden shadow-2xl">
-                <div className="bg-rakura-dark px-5 py-3 flex items-center gap-2">
-                  <div className="h-px flex-1 bg-rakura-gold/40" />
-                  <p className="text-xs font-semibold tracking-widest uppercase text-rakura-gold">
-                    {locale === "th" ? "นวัตกรรมซองชา 1NG" : "1NG Teabag Technology"}
-                  </p>
-                  <div className="h-px flex-1 bg-rakura-gold/40" />
-                </div>
-                <Image
-                  src="/assets/1NG_Features.jpg"
-                  alt="Rakura teabag features - Amongst The World's First"
-                  width={800}
-                  height={800}
-                  className="w-full h-auto"
-                />
-              </div>
-            </div>
-          </AnimateOnView>
         </div>
       </section>
 
