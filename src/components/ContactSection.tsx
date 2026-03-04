@@ -48,8 +48,8 @@ function ContactFormInner({ locale }: { locale: Locale }) {
   );
 
   const inputCls = "w-full border-b border-foreground/20 dark:border-white/20 bg-transparent px-0 py-2.5 text-foreground placeholder:text-rakura-muted/60 focus:border-rakura-gold focus:outline-none transition-colors duration-200 text-sm";
-  const lineUrl = process.env.NEXT_PUBLIC_LINE_URL || "#";
-  const whatsappUrl = process.env.NEXT_PUBLIC_WHATSAPP_URL || "https://wa.me/66";
+  const lineUrl = contact.thailand.lineUrl;
+  const whatsappUrl = contact.thailand.whatsappUrl;
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-14">
@@ -153,33 +153,6 @@ function ContactFormInner({ locale }: { locale: Locale }) {
           </a>
         </div>
 
-        <div className="pt-6 border-t border-foreground/10 dark:border-white/10 space-y-4">
-          {/* Thailand contacts */}
-          <div>
-            <p className="text-xs font-semibold tracking-widest uppercase text-rakura-gold mb-3">
-              {locale === "th" ? "ติดต่อในประเทศไทย" : "For Inquiries — Thailand"}
-            </p>
-            <div className="space-y-2">
-              {contact.thailand.agents.map((agent) => (
-                <div key={agent.name} className="flex items-start gap-3">
-                  <div className="w-1.5 h-1.5 rounded-full bg-rakura-gold mt-2 shrink-0" />
-                  <div>
-                    <span className="text-sm text-foreground font-medium">{agent.name}</span>
-                    <span className="text-xs text-rakura-muted ml-2">({agent.languages})</span>
-                    <a href={`tel:${agent.phone.replace(/\s/g, "")}`} className="block text-sm text-rakura-gold hover:text-rakura-gold-light transition-colors">
-                      {agent.phone}
-                    </a>
-                  </div>
-                </div>
-              ))}
-            </div>
-            <div className="mt-3">
-              <a href={`mailto:${contact.thailand.email}`} className="block text-sm text-rakura-gold hover:text-rakura-gold-light transition-colors">
-                {contact.thailand.email}
-              </a>
-            </div>
-          </div>
-        </div>
       </section>
     </div>
   );
