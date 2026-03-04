@@ -69,7 +69,7 @@ export function RecentlyViewed({ currentProductId, locale }: Props) {
 
         {/* Snap scroll row */}
         <div className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-2 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
-          {recent.map((product, i) => {
+          {recent.map((product) => {
             const name = isEn ? product.nameEn : product.nameTh;
             const desc = isEn
               ? product.shortDescriptionEn

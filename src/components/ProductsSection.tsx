@@ -7,7 +7,6 @@ import {
   products,
   productCategories,
   getFeaturedProducts,
-  getProductsByCategory,
   type ProductCategory,
 } from "@/data/products";
 import { ProductCard } from "@/components/ProductCard";

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { AddToBasketButton } from "@/components/AddToBasketButton";
