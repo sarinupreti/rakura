@@ -24,7 +24,7 @@ export function Header({ locale }: { locale: Locale }) {
   const base = `/${locale}`;
 
   return (
-    <header className="sticky top-0 z-50 bg-background/95 backdrop-blur-md border-b border-foreground/10 shadow-sm">
+    <header className="sticky top-0 z-50 bg-rakura-dark/95 backdrop-blur-md border-b border-white/10 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between h-16">
         {/* Logo */}
         <Link
@@ -73,7 +73,7 @@ export function Header({ locale }: { locale: Locale }) {
           <button
             type="button"
             onClick={() => setMobileOpen((o) => !o)}
-            className="md:hidden flex flex-col gap-1.5 p-2 text-foreground/70 hover:text-foreground"
+            className="md:hidden flex flex-col gap-1.5 p-2 text-white/70 hover:text-white"
             aria-label="Toggle menu"
           >
             <span className={`block h-0.5 w-5 bg-current transition-transform duration-200 ${mobileOpen ? "translate-y-2 rotate-45" : ""}`} />
@@ -85,7 +85,7 @@ export function Header({ locale }: { locale: Locale }) {
 
       {/* Mobile menu */}
       {mobileOpen && (
-        <div className="md:hidden border-t border-foreground/10 bg-background/98">
+        <div className="md:hidden border-t border-white/10 bg-rakura-dark">
           <nav className="flex flex-col px-4 py-3 gap-1">
             {navLinks.map(({ href, key, anchor }) => {
               const path = anchor ? `${base}#${anchor}` : base;
