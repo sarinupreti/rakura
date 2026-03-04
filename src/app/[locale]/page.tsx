@@ -7,181 +7,478 @@ import { features1NG } from "@/data/features";
 import { ProductsSection } from "@/components/ProductsSection";
 import { ContactSection } from "@/components/ContactSection";
 import { AnimateOnView } from "@/components/AnimateOnView";
+import { Marquee } from "@/components/Marquee";
+import { OriginMap } from "@/components/OriginMap";
+
+// Icons per 1NG feature
+const featureIcons: Record<string, string> = {
+  "plastic-free":   "🚫",
+  "cotton-thread":  "🌱",
+  "double-chamber": "🫖",
+  "compostable":    "♻️",
+  "food-grade-tags":"🏷️",
+  "packaging":      "📦",
+  "freshness":      "❄️",
+  "clean-room":     "🔬",
+  "neutrality":     "🌍",
+  "natural":        "☘️",
+};
 
 export default function HomePage({ params }: { params: { locale: string } }) {
   const locale = params.locale as Locale;
   const t = getTranslations(locale).home;
   const tStory = getTranslations(locale).story;
   const tSustainability = getTranslations(locale).sustainability;
-  const featured = getFeaturedProducts();
+  const collections = getFeaturedProducts();
+  const isEn = locale === "en";
 
   return (
     <div>
-      {/* Hero */}
-      <section
-        id="hero"
-        className="relative overflow-hidden py-20 sm:py-28 px-4 scroll-mt-0 bg-gradient-to-b from-stone-100 via-stone-50/80 to-background"
-      >
-        <div className="max-w-4xl mx-auto text-center relative">
-          <h1 className="text-4xl sm:text-5xl font-bold text-foreground tracking-tight animate-fade-in-up">
-            {t.heroTitle}
-          </h1>
-          <p className="mt-4 text-lg sm:text-xl text-rakura-muted max-w-2xl mx-auto animate-fade-in-up [animation-delay:120ms] [animation-fill-mode:both]">
-            {t.heroSubtitle}
+      {/* ── HERO ── full-screen with tea garden image */}
+      <section id="hero" className="relative min-h-[100svh] flex items-center justify-center overflow-hidden scroll-mt-0">
+        <Image
+          src="/assets/pdf/page23_large_0.png"
+          alt="Himalayan tea gardens"
+          fill
+          priority
+          className="object-cover object-[50%_40%]"
+          sizes="100vw"
+        />
+        {/* Layered overlay for depth */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/80" />
+        <div className="absolute inset-0 bg-rakura-dark/20" />
+
+        <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
+          <p className="eyebrow text-rakura-gold mb-6 animate-fade-in-down">
+            {isEn ? "EST. 1973 · NEPAL" : "ก่อตั้ง ปี 2516 · เนปาล"}
           </p>
-          <div className="mt-8 flex flex-wrap gap-4 justify-center animate-fade-in-up [animation-delay:220ms] [animation-fill-mode:both]">
+          <h1 className="font-display font-bold text-white leading-[1.05] tracking-tight animate-fade-in-up"
+            style={{ fontSize: "clamp(2.5rem, 8vw, 5.5rem)" }}
+          >
+            {isEn ? (
+              <>THE FINEST<br />HIMALAYAN TEAS</>
+            ) : (
+              <>{t.heroTitle}</>
+            )}
+          </h1>
+          <p className="mt-6 text-stone-300 text-lg sm:text-xl max-w-xl mx-auto leading-relaxed animate-fade-in-up [animation-delay:120ms]">
+            {isEn
+              ? "Pure. Single Origin. Amongst The World's Finest."
+              : t.heroSubtitle}
+          </p>
+          <div className="mt-10 flex flex-wrap gap-4 justify-center animate-fade-in-up [animation-delay:240ms]">
             <Link
               href={`/${locale}#products`}
-              className="inline-flex items-center justify-center rounded-xl bg-rakura-gold text-white font-medium px-6 py-3 shadow-soft hover:shadow-gold hover:scale-[1.02] active:scale-[0.98] transition-all duration-200"
+              className="inline-flex items-center justify-center rounded-none bg-rakura-gold text-rakura-dark font-semibold px-8 py-3.5 text-sm tracking-wider uppercase hover:bg-rakura-gold-light transition-colors duration-200 shadow-gold"
             >
               {t.heroCta}
             </Link>
             <Link
               href={`/${locale}#contact`}
-              className="inline-flex items-center justify-center rounded-xl border-2 border-rakura-gold text-rakura-gold font-medium px-6 py-3 hover:bg-rakura-gold/10 hover:border-rakura-gold-light transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
+              className="inline-flex items-center justify-center rounded-none border border-white/60 text-white font-semibold px-8 py-3.5 text-sm tracking-wider uppercase hover:bg-white/10 hover:border-white transition-colors duration-200"
             >
               {t.heroCta2}
             </Link>
           </div>
         </div>
+
+        {/* Scroll hint */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-white/40 animate-bounce">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+            <path d="M12 5v14M5 12l7 7 7-7" />
+          </svg>
+        </div>
       </section>
 
-      {/* Story */}
-      <section id="story" className="py-16 px-4 max-w-3xl mx-auto scroll-mt-20">
-        <AnimateOnView animation="fade-in-up">
-          <h2 className="text-3xl font-bold text-foreground mb-10 section-heading">{tStory.title}</h2>
-        </AnimateOnView>
-        <div className="space-y-12">
+      {/* ── MARQUEE ── */}
+      <Marquee locale={locale} variant="gold" />
+
+      {/* ── STATS STRIP ── */}
+      <section className="bg-rakura-dark border-b border-white/10">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 py-10 grid grid-cols-2 sm:grid-cols-4 gap-px bg-white/10">
           {[
-            { title: tStory.dreamTitle, lead: tStory.dreamLead },
-            { title: tStory.pioneerTitle, lead: tStory.pioneerLead },
-            { title: tStory.futureTitle, lead: tStory.futureLead },
-            { title: tStory.himalayanTitle, lead: tStory.himalayanLead },
-          ].map((block, i) => (
-            <AnimateOnView key={i} animation="fade-in-up" delay={i * 60}>
-              <div>
-                <h3 className="text-xl font-semibold text-foreground mb-3">{block.title}</h3>
-                <p className="text-rakura-muted leading-relaxed">{block.lead}</p>
-              </div>
-            </AnimateOnView>
+            { num: "70+", label: isEn ? "Years Heritage" : "ปีแห่งมรดก" },
+            { num: "50+", label: isEn ? "Tea Varieties" : "สายพันธุ์ชา" },
+            { num: "30+", label: isEn ? "Countries Exported" : "ประเทศที่ส่งออก" },
+            { num: "100%", label: isEn ? "Natural Ingredients" : "ส่วนผสมธรรมชาติ" },
+          ].map(({ num, label }) => (
+            <div key={label} className="bg-rakura-dark text-center px-4 py-6 sm:py-8">
+              <p className="font-display font-bold text-rakura-gold text-3xl sm:text-4xl">{num}</p>
+              <p className="text-white/60 text-xs tracking-widest uppercase mt-2">{label}</p>
+            </div>
           ))}
         </div>
       </section>
 
-      {/* Featured collections */}
-      <section className="py-16 px-4 bg-white">
-        <div className="max-w-6xl mx-auto">
+      {/* ── BRAND STATEMENT ── */}
+      <section className="bg-background py-20 sm:py-28 px-4">
+        <div className="max-w-3xl mx-auto text-center">
           <AnimateOnView animation="fade-in-up">
-            <h2 className="text-2xl font-semibold text-foreground mb-8 section-heading">
-              {locale === "th" ? "คอลเลกชันแนะนำ" : "Featured collections"}
-            </h2>
-          </AnimateOnView>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {featured.map((product, i) => {
-              const hasImage = product.image && !product.image.includes("placeholder");
-              return (
-                <AnimateOnView key={product.id} animation="scale-in" delay={i * 80}>
-                  <Link
-                    href={`/${locale}#products`}
-                    className="group block rounded-2xl border border-stone-200 overflow-hidden bg-white shadow-soft hover:shadow-soft-lg hover:border-rakura-gold/40 hover:-translate-y-1 transition-all duration-300"
-                  >
-                    <div className="aspect-square bg-stone-100 relative flex items-center justify-center overflow-hidden">
-                      {hasImage ? (
-                        <Image
-                          src={product.image!}
-                          alt={locale === "th" ? product.nameTh : product.nameEn}
-                          fill
-                          className="object-cover group-hover:scale-110 transition-transform duration-500"
-                          sizes="(max-width: 640px) 100vw, 25vw"
-                        />
-                      ) : (
-                        <span className="text-rakura-muted font-medium text-lg">Rakura</span>
-                      )}
-                    </div>
-                    <div className="p-4">
-                      <h3 className="font-medium text-foreground group-hover:text-rakura-gold transition-colors">
-                        {locale === "th" ? product.nameTh : product.nameEn}
-                      </h3>
-                      <p className="text-sm text-rakura-muted mt-1">
-                        {product.bagCount} {locale === "th" ? "ซอง" : "bags"}
-                      </p>
-                    </div>
-                  </Link>
-                </AnimateOnView>
-              );
-            })}
-          </div>
-          <div className="mt-8 text-center">
-            <Link
-              href={`/${locale}#products`}
-              className="inline-flex items-center gap-1 text-rakura-gold font-medium hover:underline underline-offset-4 transition-all"
+            <p className="eyebrow mb-5">
+              {isEn ? "A Tea Secret Revealed" : "ความลับของชาที่ถูกเปิดเผย"}
+            </p>
+            <h2 className="font-display font-bold text-foreground leading-tight"
+              style={{ fontSize: "clamp(1.6rem, 4vw, 2.5rem)" }}
             >
-              {t.ctaProducts}
-            </Link>
+              {isEn
+                ? "Introducing The World To One Of The Best Kept Tea Secrets: Himalayan Tea."
+                : "แนะนำความลับของชาที่ดีที่สุดในโลกให้ทุกคนได้รู้จัก: ชาหิมาลัย"}
+            </h2>
+            <p className="mt-6 text-rakura-muted leading-relaxed text-base sm:text-lg">
+              {isEn
+                ? "Nepal makes teas that are amongst the finest in the world — a fact largely unheard-of by most consumers. We envisaged Rakura to defy this status quo, built on over 40 years of experience, working to change the face of Nepalese tea while creating true sustainability."
+                : "เนปาลผลิตชาที่อยู่ในระดับชั้นเลิศของโลก แต่ความจริงนี้แทบไม่เป็นที่รู้จัก Rakura ถูกสร้างขึ้นด้วยประสบการณ์กว่า 40 ปี เพื่อเปลี่ยนโฉมหน้าของอุตสาหกรรมชาเนปาล"}
+            </p>
+          </AnimateOnView>
+        </div>
+      </section>
+
+      {/* ── STORY: THE DREAM ── split layout */}
+      <section id="story" className="scroll-mt-16 overflow-hidden">
+        <div className="grid grid-cols-1 md:grid-cols-2">
+          {/* Image */}
+          <div className="relative min-h-[400px] md:min-h-[560px] order-2 md:order-1">
+            <Image
+              src="/assets/pdf/page9_large_0.png"
+              alt="Rakura tea tasting"
+              fill
+              className="object-cover object-center"
+              sizes="(max-width: 768px) 100vw, 50vw"
+            />
+          </div>
+          {/* Text */}
+          <div className="bg-rakura-dark text-white px-8 sm:px-14 py-16 flex flex-col justify-center order-1 md:order-2">
+            <AnimateOnView animation="fade-in-up">
+              <p className="eyebrow text-rakura-gold mb-4">
+                {isEn ? "The Dream" : "ความฝัน"}
+              </p>
+              <h2 className="font-display font-bold text-white mb-6 leading-tight text-3xl sm:text-4xl">
+                {tStory.dreamTitle}
+              </h2>
+              <p className="text-white/70 leading-relaxed">{tStory.dreamLead}</p>
+            </AnimateOnView>
           </div>
         </div>
       </section>
 
-      {/* Products (full grid with category filter) */}
-      <ProductsSection locale={locale} />
+      {/* ── STORY: THE PIONEER ── reversed */}
+      <section className="overflow-hidden">
+        <div className="grid grid-cols-1 md:grid-cols-2">
+          {/* Text */}
+          <div className="bg-rakura-dark text-white px-8 sm:px-14 py-16 flex flex-col justify-center">
+            <AnimateOnView animation="fade-in-up">
+              <p className="eyebrow text-white/70 mb-4">
+                {isEn ? "The Pioneer" : "ผู้บุกเบิก"}
+              </p>
+              <h2 className="font-display font-bold text-white mb-6 leading-tight text-3xl sm:text-4xl">
+                {tStory.pioneerTitle}
+              </h2>
+              <p className="text-white/80 leading-relaxed">{tStory.pioneerLead}</p>
+            </AnimateOnView>
+          </div>
+          {/* Image */}
+          <div className="relative min-h-[400px] md:min-h-[560px]">
+            <Image
+              src="/assets/pdf/page23_large_0.png"
+              alt="Himalayan tea plantation"
+              fill
+              className="object-cover object-[50%_60%]"
+              sizes="(max-width: 768px) 100vw, 50vw"
+            />
+          </div>
+        </div>
+      </section>
 
-      {/* 1NG features / Sustainability */}
-      <section id="sustainability" className="py-16 px-4 bg-stone-50 scroll-mt-20">
+      {/* ── STORY: THE FUTURE ── split */}
+      <section className="overflow-hidden">
+        <div className="grid grid-cols-1 md:grid-cols-2">
+          {/* Image */}
+          <div className="relative min-h-[400px] md:min-h-[520px] order-2 md:order-1">
+            <Image
+              src="/assets/pdf/page24_large_0.png"
+              alt="Tea picker in the Himalayas"
+              fill
+              className="object-cover object-center"
+              sizes="(max-width: 768px) 100vw, 50vw"
+            />
+          </div>
+          {/* Text */}
+          <div className="bg-background px-8 sm:px-14 py-16 flex flex-col justify-center order-1 md:order-2 border-l border-foreground/10">
+            <AnimateOnView animation="fade-in-up">
+              <p className="eyebrow mb-4">
+                {isEn ? "The Future" : "อนาคต"}
+              </p>
+              <h2 className="font-display font-bold text-foreground mb-6 leading-tight text-3xl sm:text-4xl">
+                {tStory.futureTitle}
+              </h2>
+              <p className="text-rakura-muted leading-relaxed">{tStory.futureLead}</p>
+              <div className="mt-8 pt-8 border-t border-foreground/10">
+                <p className="eyebrow mb-3">{isEn ? "Himalayan Origin" : "ต้นกำเนิดหิมาลัย"}</p>
+                <h3 className="font-semibold text-foreground text-xl mb-3">{tStory.himalayanTitle}</h3>
+                <p className="text-rakura-muted leading-relaxed text-sm">{tStory.himalayanLead}</p>
+                <div className="mt-8">
+                  <OriginMap locale={locale} />
+                </div>
+              </div>
+            </AnimateOnView>
+          </div>
+        </div>
+      </section>
+
+      {/* ── AWARDS / CERTIFICATIONS ── */}
+      <section className="bg-stone-50 border-y border-stone-200 py-8 overflow-hidden">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6">
+          <AnimateOnView animation="fade-in-up">
+            <p className="text-center text-xs tracking-widest uppercase text-rakura-muted mb-6">
+              {isEn ? "Certified & Recognised" : "รับรองและได้รับการยอมรับ"}
+            </p>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-8">
+              {[
+                { icon: "🏆", label: isEn ? "Nepal's Finest\nFood Safety & Quality" : "รางวัลมาตรฐาน\nความปลอดภัยอาหาร เนปาล" },
+                { icon: "🌿", label: isEn ? "FSC Certified\nSustainable Packaging" : "บรรจุภัณฑ์ยั่งยืน\nได้รับรอง FSC" },
+                { icon: "✅", label: isEn ? "100% Food Grade\nCompostable Teabags" : "ซองชาย่อยสลายได้\nเกรดอาหาร 100%" },
+                { icon: "🌍", label: isEn ? "Exported to\n30+ Countries" : "ส่งออกสู่\nกว่า 30 ประเทศ" },
+              ].map(({ icon, label }) => (
+                <div key={label} className="flex flex-col items-center text-center gap-2 py-2">
+                  <span className="text-2xl grayscale opacity-70">{icon}</span>
+                  <p className="text-xs text-rakura-muted leading-relaxed whitespace-pre-line">{label}</p>
+                </div>
+              ))}
+            </div>
+          </AnimateOnView>
+        </div>
+      </section>
+
+      {/* ── TEA QUIZ CTA ── */}
+      <section className="bg-background border-b border-stone-200 py-16 sm:py-20 px-4 overflow-hidden">
+        <div className="max-w-4xl mx-auto">
+          <AnimateOnView animation="fade-in-up">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+              {/* Left: text */}
+              <div>
+                <p className="eyebrow mb-4">{isEn ? "Personalised for You" : "คำแนะนำเฉพาะคุณ"}</p>
+                <h2
+                  className="font-display font-bold text-foreground leading-tight mb-5"
+                  style={{ fontSize: "clamp(1.5rem, 3vw, 2.2rem)" }}
+                >
+                  {isEn
+                    ? "Not Sure Which Tea? Let Us Guide You."
+                    : "ยังไม่รู้จะเลือกชาไหน? ให้เราช่วยคุณ"}
+                </h2>
+                <p className="text-rakura-muted leading-relaxed mb-8 text-sm sm:text-base">
+                  {isEn
+                    ? "Answer 4 quick questions about your mood, time of day and wellness goals — we'll recommend your perfect Rakura tea."
+                    : "ตอบ 4 คำถามเกี่ยวกับอารมณ์ เวลา และเป้าหมายสุขภาพของคุณ เราจะแนะนำชา Rakura ที่เหมาะที่สุดสำหรับคุณ"}
+                </p>
+                <Link
+                  href={`/${locale}/quiz`}
+                  className="inline-flex items-center gap-2 bg-rakura-gold text-rakura-dark font-semibold text-sm tracking-wider uppercase px-8 py-3.5 hover:bg-rakura-gold-light transition-colors duration-200 shadow-gold"
+                >
+                  🍵 {isEn ? "Take the Tea Quiz" : "ทำแบบทดสอบชา"}
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
+                </Link>
+              </div>
+              {/* Right: visual cards */}
+              <div className="hidden md:grid grid-cols-2 gap-3">
+                {[
+                  { emoji: "⚡", labelEn: "Need energy?", labelTh: "ต้องการพลังงาน?" },
+                  { emoji: "🌙", labelEn: "Wind down?", labelTh: "อยากผ่อนคลาย?" },
+                  { emoji: "🛡️", labelEn: "Antioxidants?", labelTh: "สารต้านอนุมูล?" },
+                  { emoji: "🌱", labelEn: "Digestive aid?", labelTh: "ช่วยย่อยอาหาร?" },
+                ].map((card) => (
+                  <div
+                    key={card.labelEn}
+                    className="border border-stone-200 rounded-sm p-4 flex flex-col gap-2 hover:border-rakura-gold/40 transition-colors"
+                  >
+                    <span className="text-2xl">{card.emoji}</span>
+                    <span className="text-xs font-medium text-rakura-muted">{isEn ? card.labelEn : card.labelTh}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </AnimateOnView>
+        </div>
+      </section>
+
+      {/* ── COLLECTIONS ── dark showcase */}
+      <section className="bg-rakura-dark py-20 sm:py-28 px-4">
         <div className="max-w-6xl mx-auto">
           <AnimateOnView animation="fade-in-up">
-            <h2 className="text-3xl font-bold text-foreground text-center mb-2 section-heading">
-              {tSustainability.title}
-            </h2>
+            <div className="text-center mb-14">
+              <p className="eyebrow mb-4">{isEn ? "Our Collections" : "คอลเลกชันของเรา"}</p>
+              <h2 className="font-display font-bold text-white leading-tight"
+                style={{ fontSize: "clamp(1.5rem, 3.5vw, 2.2rem)" }}
+              >
+                {isEn
+                  ? "Teas, Amongst The Finest In The World.\nProudly Made In Nepal."
+                  : "ชา ในระดับชั้นเลิศของโลก ผลิตจากเนปาลด้วยความภาคภูมิใจ"}
+              </h2>
+            </div>
           </AnimateOnView>
-          <p className="text-center text-rakura-muted mb-10">{t.featuresSubtitle}</p>
 
-          <div className="max-w-3xl mx-auto space-y-12 mb-12">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+            {collections.map((product, i) => (
+              <AnimateOnView key={product.id} animation="scale-in" delay={i * 80}>
+                <Link
+                  href={`/${locale}/products/${product.id}`}
+                  className="group block rounded-sm overflow-hidden border border-white/10 hover:border-rakura-gold/50 transition-all duration-300 hover:-translate-y-1"
+                >
+                  <div className="aspect-[3/4] relative bg-stone-900 overflow-hidden flex items-center justify-center">
+                    <Image
+                      src={product.image!}
+                      alt={locale === "th" ? product.nameTh : product.nameEn}
+                      fill
+                      className="object-contain p-6 group-hover:scale-105 transition-transform duration-500"
+                      sizes="(max-width: 640px) 50vw, 25vw"
+                    />
+                  </div>
+                  <div className="p-4 bg-stone-900">
+                    <p className="text-xs tracking-widest uppercase text-rakura-gold font-medium mb-1">
+                      {isEn ? "50 bags" : "50 ซอง"}
+                    </p>
+                    <h3 className="text-white font-semibold text-sm leading-tight group-hover:text-rakura-gold transition-colors">
+                      {locale === "th" ? product.nameTh : product.nameEn}
+                    </h3>
+                  </div>
+                </Link>
+              </AnimateOnView>
+            ))}
+          </div>
+
+          <AnimateOnView animation="fade-in-up">
+            <div className="mt-12 text-center">
+              <Link
+                href={`/${locale}#products`}
+                className="inline-flex items-center gap-2 text-sm font-semibold tracking-wider uppercase text-rakura-gold border border-rakura-gold/40 hover:border-rakura-gold hover:bg-rakura-gold/10 px-8 py-3 transition-all duration-200"
+              >
+                {t.ctaProducts}
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
+              </Link>
+            </div>
+          </AnimateOnView>
+        </div>
+      </section>
+
+      {/* ── FULL PRODUCT CATALOGUE ── */}
+      <ProductsSection locale={locale} />
+
+      {/* ── SUSTAINABILITY ── full-bleed image with overlay */}
+      <section id="sustainability" className="relative py-24 sm:py-36 px-4 scroll-mt-16 overflow-hidden">
+        <Image
+          src="/assets/pdf/page10_large_0.png"
+          alt="Rakura production technology"
+          fill
+          className="object-cover object-center"
+          sizes="100vw"
+        />
+        <div className="absolute inset-0 bg-black/95" />
+
+        <div className="relative z-10 max-w-5xl mx-auto">
+          <AnimateOnView animation="fade-in-up">
+            <div className="text-center mb-16">
+              <p className="eyebrow mb-4">{isEn ? "Our Commitment" : "ความมุ่งมั่นของเรา"}</p>
+              <h2 className="font-display font-bold text-white mb-4 leading-tight"
+                style={{ fontSize: "clamp(1.8rem, 4vw, 2.8rem)" }}
+              >
+                {tSustainability.title}
+              </h2>
+              <p className="text-white/80 max-w-xl mx-auto">{t.featuresSubtitle}</p>
+            </div>
+          </AnimateOnView>
+
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-10 mb-16">
             {[
               { title: tSustainability.trueTitle, lead: tSustainability.trueLead },
               { title: tSustainability.standardsTitle, lead: tSustainability.standardsLead },
               { title: tSustainability.environmentTitle, lead: tSustainability.environmentLead },
             ].map((block, i) => (
               <AnimateOnView key={i} animation="fade-in-up" delay={i * 80}>
-                <div>
-                  <h3 className="text-xl font-semibold text-foreground mb-3">{block.title}</h3>
-                  <p className="text-rakura-muted leading-relaxed">{block.lead}</p>
+                <div className="border-t border-rakura-gold/40 pt-6">
+                  <h3 className="text-white font-semibold text-lg mb-3">{block.title}</h3>
+                  <p className="text-white/80 text-sm leading-relaxed">{block.lead}</p>
                 </div>
               </AnimateOnView>
             ))}
           </div>
 
-          <h3 className="text-xl font-semibold text-foreground text-center mb-6">
-            {locale === "th" ? "นวัตกรรมซองชา 1NG" : "1NG Teabag innovation"}
-          </h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-10">
-            {features1NG.map((f, i) => (
-              <AnimateOnView key={f.id} animation="scale-in" delay={i * 50}>
-                <div className="p-5 rounded-2xl bg-white border border-stone-200/80 shadow-soft hover:shadow-soft-lg hover:border-rakura-gold/30 transition-all duration-300">
-                  <h4 className="font-medium text-foreground">
-                    {locale === "th" ? f.titleTh : f.titleEn}
-                  </h4>
-                  <p className="text-sm text-rakura-muted mt-1 line-clamp-2">
-                    {locale === "th" ? f.descriptionTh : f.descriptionEn}
-                  </p>
-                </div>
-              </AnimateOnView>
-            ))}
-          </div>
+          {/* ── 1NG Teabag Innovation — Horizontal Scroll Strip ── */}
           <AnimateOnView animation="fade-in-up">
-            <div className="relative rounded-2xl overflow-hidden border border-stone-200 bg-white shadow-soft max-w-4xl mx-auto ring-1 ring-stone-100">
-              <Image
-                src="/assets/1NG_Features.jpg"
-                alt="Rakura teabag features - plastic free, compostable, FSC certified"
-                width={1200}
-                height={800}
-                className="w-full h-auto object-contain"
-              />
+            <div className="mt-4 pt-14 border-t border-white/10">
+
+              {/* Header row */}
+              <div className="flex items-end justify-between mb-8">
+                <div>
+                  <p className="text-xs tracking-widest uppercase text-rakura-gold font-semibold mb-2">
+                    {isEn ? "Among The World's First" : "หนึ่งในรายแรกของโลก"}
+                  </p>
+                  <h3 className="font-display font-semibold text-white text-2xl sm:text-3xl">
+                    {isEn ? "1NG Teabag Innovation" : "นวัตกรรมซองชา 1NG"}
+                  </h3>
+                </div>
+                <span className="text-white/30 text-xs flex items-center gap-1.5 shrink-0 ml-6 pb-1">
+                  {isEn ? "Scroll" : "เลื่อนดู"}
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
+                </span>
+              </div>
+
+              {/* Scroll container */}
+              <div className="relative">
+                {/* Right-edge fade — indicates more content */}
+                <div className="absolute right-0 top-0 bottom-3 w-24 bg-gradient-to-l from-black/90 to-transparent z-10 pointer-events-none rounded-sm" />
+
+                <div className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                  {features1NG.map((f, i) => (
+                    <div
+                      key={f.id}
+                      className="snap-start shrink-0 w-56 sm:w-64 border border-white/10 bg-white/5 p-6 flex flex-col hover:border-rakura-gold/50 hover:bg-white/10 transition-all duration-300 group"
+                    >
+                      {/* Large dim number — background decoration */}
+                      <p className="font-display font-bold text-6xl leading-none text-white/[0.06] mb-3 select-none tracking-tight">
+                        {String(i + 1).padStart(2, "0")}
+                      </p>
+                      {/* Icon */}
+                      <span className="text-2xl mb-4 block">{featureIcons[f.id] ?? "✦"}</span>
+                      {/* Title */}
+                      <h4 className="font-semibold text-white text-sm mb-2 leading-snug group-hover:text-rakura-gold transition-colors duration-200 flex-none">
+                        {isEn ? f.titleEn : f.titleTh}
+                      </h4>
+                      {/* Description */}
+                      <p className="text-white/45 text-xs leading-relaxed mt-auto pt-3 border-t border-white/10">
+                        {isEn ? f.descriptionEn : f.descriptionTh}
+                      </p>
+                    </div>
+                  ))}
+                  {/* End spacer so last card doesn't sit against the fade */}
+                  <div className="shrink-0 w-12" />
+                </div>
+
+                {/* Thin progress rail — decorative, shows total card count */}
+                <div className="flex gap-px mt-2">
+                  {features1NG.map((f) => (
+                    <div key={f.id} className="h-px flex-1 bg-white/10" />
+                  ))}
+                </div>
+                <p className="text-white/20 text-[10px] tracking-widest uppercase mt-1.5">
+                  {features1NG.length} {isEn ? "innovations" : "นวัตกรรม"}
+                </p>
+              </div>
+
             </div>
           </AnimateOnView>
+
         </div>
       </section>
 
-      {/* Contact */}
+      {/* ── MARQUEE (dark variant) ── */}
+      <Marquee locale={locale} variant="dark" />
+
+      {/* ── CONTACT ── */}
       <ContactSection locale={locale} />
     </div>
   );

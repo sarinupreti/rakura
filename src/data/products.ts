@@ -1,23 +1,21 @@
-// Collections: cropped from rendered PDF page 12 (2x2 grid: Noir, Emerald, Rouge, Blossoms).
+// Collections: clean individual box images cropped from the PDF collections overview page.
 const PDF_COLLECTION_IMAGES = [
-  "/assets/pdf/page12_crop0.png", // himalayan-noir
-  "/assets/pdf/page12_crop1.png", // himalayan-emerald
-  "/assets/pdf/page12_crop2.png", // himalayan-rouge
-  "/assets/pdf/page12_crop3.png", // himalayan-blossoms
+  "/assets/pdf/collection-noir-transparent.png",     // himalayan-noir (black & gold box)
+  "/assets/pdf/collection-emerald-transparent.png",  // himalayan-emerald (teal box)
+  "/assets/pdf/collection-rouge-transparent.png",    // himalayan-rouge (red box)
+  "/assets/pdf/collection-blossoms-transparent.png", // himalayan-blossoms (cream/tan box)
 ];
-// First 6 Classic: cropped from rendered PDF page 13 (2x3 grid).
+// First 6 Classic teas: extracted from PDF page 14 individual product pages.
 const PDF_CLASSIC_EARLY_IMAGES = [
-  "/assets/pdf/page13_crop0.png", // classic-green (25 & 100)
-  "/assets/pdf/page13_crop1.png", // classic-breakfast-100
-  "/assets/pdf/page13_crop2.png", // english-breakfast-25
-  "/assets/pdf/page13_crop3.png", // organic-high-mountain-black
-  "/assets/pdf/page13_crop4.png", // pure-green-25
-  "/assets/pdf/page13_crop5.png", // pure-masala-25
+  "/assets/pdf/page14_img0.png", // classic-green (dark green box)
+  "/assets/pdf/page14_img1.png", // classic-breakfast-100 (yellow box)
+  "/assets/pdf/page14_img2.png", // english-breakfast-25 (pink/mauve box)
+  "/assets/pdf/page14_img3.png", // organic-high-mountain-black (dark navy box)
+  "/assets/pdf/page14_img4.png", // pure-green-25 (teal box)
+  "/assets/pdf/page14_img5.png", // pure-masala-25 (gold/tan box)
 ];
-// Product images extracted from Profile PDF (pages 14–20), from Earl Grey onward.
+// Remaining product images from PDF (pages 15–20), from Earl Grey onward.
 const PDF_PRODUCT_IMAGES = [
-  "/assets/pdf/page14_img0.png", "/assets/pdf/page14_img1.png", "/assets/pdf/page14_img2.png",
-  "/assets/pdf/page14_img3.png", "/assets/pdf/page14_img4.png", "/assets/pdf/page14_img5.png",
   "/assets/pdf/page15_img0.png", "/assets/pdf/page15_img1.png", "/assets/pdf/page15_img2.png",
   "/assets/pdf/page15_img3.png", "/assets/pdf/page15_img4.png", "/assets/pdf/page15_img5.png",
   "/assets/pdf/page16_img0.png", "/assets/pdf/page16_img1.png", "/assets/pdf/page16_img2.png",
@@ -43,6 +41,8 @@ export const productCategories = [
 
 export type ProductCategory = (typeof productCategories)[number];
 
+import type { TeaType } from "./teaData";
+
 export interface Product {
   id: string;
   category: ProductCategory;
@@ -53,6 +53,10 @@ export interface Product {
   shortDescriptionEn: string;
   shortDescriptionTh: string;
   image?: string;
+  tastingNoteEn?: string;
+  tastingNoteTh?: string;
+  origin?: string;
+  teaType?: TeaType;
 }
 
 export const products: Product[] = [
@@ -66,6 +70,10 @@ export const products: Product[] = [
     shortDescriptionEn: "A heavenly selection of high-grown black & breakfast teas.",
     shortDescriptionTh: "ชาดำและชาเบรกฟาสต์จากที่สูง คัดสรรอย่างดี",
     image: PDF_COLLECTION_IMAGES[0],
+    tastingNoteEn: "Bold & malty. Notes of amber honey and dark chocolate.",
+    tastingNoteTh: "เข้มข้น หอมมอลต์ กลิ่นน้ำผึ้งและช็อกโกแลตดำ",
+    origin: "Ilam & Jhapa, Nepal",
+    teaType: "black",
   },
   {
     id: "himalayan-rouge",
@@ -76,6 +84,10 @@ export const products: Product[] = [
     shortDescriptionEn: "A heavenly selection of high-grown green & black teas + delectable fruits.",
     shortDescriptionTh: "ชาเขียว ชาดำ และผลไม้จากที่สูง",
     image: PDF_COLLECTION_IMAGES[2],
+    tastingNoteEn: "Vibrant & fruity. Red berries, hibiscus, delicate green finish.",
+    tastingNoteTh: "สดชื่น หอมผลไม้ เบอร์รีแดง ดอกชบา จบด้วยชาเขียว",
+    origin: "Ilam, Nepal",
+    teaType: "fruit",
   },
   {
     id: "himalayan-emerald",
@@ -86,6 +98,10 @@ export const products: Product[] = [
     shortDescriptionEn: "A heavenly selection of high-grown green teas.",
     shortDescriptionTh: "ชาเขียวจากที่สูง คัดสรรอย่างดี",
     image: PDF_COLLECTION_IMAGES[1],
+    tastingNoteEn: "Light & grassy. Fresh spring water clarity with jasmine hints.",
+    tastingNoteTh: "เบาสบาย หอมหญ้า สดชื่นเหมือนน้ำพุ กลิ่นมะลิอ่อน",
+    origin: "Ilam, Nepal",
+    teaType: "green",
   },
   {
     id: "himalayan-blossoms",
@@ -96,6 +112,10 @@ export const products: Product[] = [
     shortDescriptionEn: "A heavenly selection of high-grown green teas + soothing flowers & herbs.",
     shortDescriptionTh: "ชาเขียวจากที่สูง และดอกไม้กับสมุนไพร",
     image: PDF_COLLECTION_IMAGES[3],
+    tastingNoteEn: "Delicate & floral. Wildflower honey, chamomile, alpine herbs.",
+    tastingNoteTh: "ละเอียดอ่อน หอมดอกไม้ น้ำผึ้งดอกป่า คาโมมายล์",
+    origin: "High-altitude gardens, Nepal",
+    teaType: "herbal",
   },
   // Classic & single-origin (25/100 bags)
   {
@@ -107,6 +127,10 @@ export const products: Product[] = [
     shortDescriptionEn: "Classic Himalayan green. Also available in 100 bags.",
     shortDescriptionTh: "ชาเขียวหิมาลัยคลาสสิก มีแบบ 100 ถุง",
     image: PDF_CLASSIC_EARLY_IMAGES[0],
+    teaType: "green",
+    origin: "Ilam, Nepal",
+    tastingNoteEn: "Light, grassy and clean with a gentle sweetness.",
+    tastingNoteTh: "เบาสบาย หอมหญ้า สะอาด มีความหวานอ่อนๆ",
   },
   {
     id: "classic-green-100",
@@ -117,6 +141,10 @@ export const products: Product[] = [
     shortDescriptionEn: "100 Magic-knot compostable teabags.",
     shortDescriptionTh: "100 ซองชาย่อยสลายได้",
     image: PDF_CLASSIC_EARLY_IMAGES[0],
+    teaType: "green",
+    origin: "Ilam, Nepal",
+    tastingNoteEn: "Light, grassy and clean with a gentle sweetness.",
+    tastingNoteTh: "เบาสบาย หอมหญ้า สะอาด มีความหวานอ่อนๆ",
   },
   {
     id: "classic-breakfast-100",
@@ -127,6 +155,10 @@ export const products: Product[] = [
     shortDescriptionEn: "100 Magic-knot compostable teabags.",
     shortDescriptionTh: "100 ซองชาย่อยสลายได้",
     image: PDF_CLASSIC_EARLY_IMAGES[1],
+    teaType: "breakfast",
+    origin: "Jhapa, Nepal",
+    tastingNoteEn: "Bold and malty with a brisk, energising character.",
+    tastingNoteTh: "เข้มข้น หอมมอลต์ สดชื่นและกระตุ้นพลังงาน",
   },
   {
     id: "english-breakfast-25",
@@ -137,6 +169,10 @@ export const products: Product[] = [
     shortDescriptionEn: "25 Magic-knot compostable teabags.",
     shortDescriptionTh: "25 ซองชาย่อยสลายได้",
     image: PDF_CLASSIC_EARLY_IMAGES[2],
+    teaType: "breakfast",
+    origin: "Jhapa, Nepal",
+    tastingNoteEn: "Robust and full-bodied. Perfect with milk.",
+    tastingNoteTh: "เข้มข้นและเต็มรส เข้ากันได้ดีกับนม",
   },
   {
     id: "organic-high-mountain-black",
@@ -147,6 +183,10 @@ export const products: Product[] = [
     shortDescriptionEn: "25 Magic-knot compostable teabags.",
     shortDescriptionTh: "25 ซองชาย่อยสลายได้",
     image: PDF_CLASSIC_EARLY_IMAGES[3],
+    teaType: "black",
+    origin: "High-altitude gardens, Ilam, Nepal",
+    tastingNoteEn: "Rich, smooth and complex with earthy mineral notes.",
+    tastingNoteTh: "เข้มข้น นุ่มลื่น ซับซ้อน มีกลิ่นดินและแร่ธาตุ",
   },
   {
     id: "pure-green-25",

@@ -14,4 +14,15 @@ export const contact = {
     address: "GPO Box 73, Rakura House, Bargachhi, Biratnagar, Nepal",
     phone: "+977 21 590276 / 576776",
   },
+  thailand: {
+    label: "Thailand",
+    email: "rakura.thailand@gmail.com",
+    website: "https://rakura.vercel.app",
+    lineUrl: "https://line.me/ti/p/+66988873040",
+    whatsappUrl: "https://wa.me/66615761606",
+    agents: [
+      { name: "Anusit L.", languages: "Thai / English", phone: "+66 98 887 3040" },
+      { name: "Sarin U.", languages: "English", phone: "+66 61 576 1606" },
+    ],
+  },
 };

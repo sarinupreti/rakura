@@ -29,23 +29,25 @@ export function ProductsSection({ locale }: { locale: Locale }) {
   }, [activeCategory]);
 
   return (
-    <section id="products" className="py-16 px-4 bg-white scroll-mt-20">
-      <div className="max-w-6xl mx-auto">
+    <section id="products" className="py-20 sm:py-28 px-4 bg-background scroll-mt-16">
+      <div className="max-w-7xl mx-auto">
         <header className="mb-10">
           <AnimateOnView animation="fade-in-up">
-            <h2 className="text-3xl font-bold text-foreground section-heading">{t.title}</h2>
-            <p className="mt-2 text-rakura-muted">{t.subtitle}</p>
+            <p className="eyebrow mb-3">{locale === "th" ? "ผลิตภัณฑ์ทั้งหมด" : "Full Range"}</p>
+            <h2 className="font-display font-bold text-foreground text-3xl sm:text-4xl section-heading">{t.title}</h2>
+            <p className="mt-4 text-rakura-muted">{t.subtitle}</p>
           </AnimateOnView>
         </header>
 
-        <div className="flex flex-wrap gap-2 mb-10 border-b border-stone-200 pb-4">
+        {/* Category filter */}
+        <div className="flex flex-wrap gap-2 mb-10 border-b border-foreground/10 dark:border-white/10 pb-5">
           <button
             type="button"
             onClick={() => setActiveCategory("all")}
-            className={`px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 ${
+            className={`px-4 py-2 text-xs font-semibold tracking-wider uppercase transition-all duration-200 ${
               activeCategory === "all"
-                ? "bg-rakura-gold text-white shadow-soft"
-                : "bg-stone-100 text-rakura-muted hover:bg-stone-200 hover:text-foreground"
+                ? "bg-rakura-gold text-rakura-dark"
+                : "border border-foreground/20 dark:border-white/20 text-rakura-muted hover:border-rakura-gold hover:text-foreground"
             }`}
           >
             {locale === "th" ? "ทั้งหมด" : "All"}
@@ -55,10 +57,10 @@ export function ProductsSection({ locale }: { locale: Locale }) {
               key={cat}
               type="button"
               onClick={() => setActiveCategory(cat)}
-              className={`px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 ${
+              className={`px-4 py-2 text-xs font-semibold tracking-wider uppercase transition-all duration-200 ${
                 activeCategory === cat
-                  ? "bg-rakura-gold text-white shadow-soft"
-                  : "bg-stone-100 text-rakura-muted hover:bg-stone-200 hover:text-foreground"
+                  ? "bg-rakura-gold text-rakura-dark"
+                  : "border border-foreground/20 dark:border-white/20 text-rakura-muted hover:border-rakura-gold hover:text-foreground"
               }`}
             >
               {t[categoryKeys[cat]]}
@@ -66,7 +68,7 @@ export function ProductsSection({ locale }: { locale: Locale }) {
           ))}
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-5">
           {filteredProducts.map((product) => (
             <ProductCard key={product.id} product={product} locale={locale} />
           ))}
