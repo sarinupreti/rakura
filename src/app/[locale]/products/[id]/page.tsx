@@ -6,6 +6,8 @@ import { getTeaProfile } from "@/data/teaData";
 import type { Locale } from "@/lib/i18n";
 import { AnimateOnView } from "@/components/AnimateOnView";
 import { AddToBasketButton } from "@/components/AddToBasketButton";
+import { StickyEnquiryBar } from "@/components/StickyEnquiryBar";
+import { RecentlyViewed } from "@/components/RecentlyViewed";
 
 export function generateStaticParams() {
   return products.map((p) => ({ id: p.id }));
@@ -231,6 +233,9 @@ export default function ProductDetailPage({
                   {isEn ? "All Products" : "ดูทั้งหมด"}
                 </Link>
               </div>
+
+              {/* Sentinel — observed by StickyEnquiryBar to know when CTAs are off-screen */}
+              <div id="enquiry-cta-sentinel" aria-hidden="true" />
             </div>
           </AnimateOnView>
         </div>
@@ -296,7 +301,24 @@ export default function ProductDetailPage({
             </div>
           </div>
         </AnimateOnView>
+
+        {/* ── RECENTLY VIEWED ── */}
+        <RecentlyViewed currentProductId={product.id} locale={locale} />
+
       </div>
+
+      {/* ── STICKY ENQUIRY BAR ── */}
+      <StickyEnquiryBar
+        product={{
+          id: product.id,
+          nameEn: product.nameEn,
+          nameTh: product.nameTh,
+          image: product.image,
+          category: product.category,
+        }}
+        locale={locale}
+        inquireUrl={inquireUrl}
+      />
     </div>
   );
 }
