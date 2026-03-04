@@ -218,7 +218,7 @@ export default function HomePage({ params }: { params: { locale: string } }) {
                       sizes="(max-width: 640px) 50vw, 25vw"
                     />
                   </div>
-                  <div className="p-4 bg-stone-900/80">
+                  <div className="p-4 bg-stone-900">
                     <p className="text-xs tracking-widest uppercase text-rakura-gold font-medium mb-1">
                       {isEn ? "50 bags" : "50 ซอง"}
                     </p>
@@ -259,7 +259,7 @@ export default function HomePage({ params }: { params: { locale: string } }) {
           className="object-cover object-center"
           sizes="100vw"
         />
-        <div className="absolute inset-0 bg-rakura-dark/80" />
+        <div className="absolute inset-0 bg-rakura-dark/92" />
 
         <div className="relative z-10 max-w-5xl mx-auto">
           <AnimateOnView animation="fade-in-up">
@@ -270,7 +270,7 @@ export default function HomePage({ params }: { params: { locale: string } }) {
               >
                 {tSustainability.title}
               </h2>
-              <p className="text-white/60 max-w-xl mx-auto">{t.featuresSubtitle}</p>
+              <p className="text-white/80 max-w-xl mx-auto">{t.featuresSubtitle}</p>
             </div>
           </AnimateOnView>
 
@@ -283,7 +283,7 @@ export default function HomePage({ params }: { params: { locale: string } }) {
               <AnimateOnView key={i} animation="fade-in-up" delay={i * 80}>
                 <div className="border-t border-rakura-gold/40 pt-6">
                   <h3 className="text-white font-semibold text-lg mb-3">{block.title}</h3>
-                  <p className="text-white/60 text-sm leading-relaxed">{block.lead}</p>
+                  <p className="text-white/80 text-sm leading-relaxed">{block.lead}</p>
                 </div>
               </AnimateOnView>
             ))}

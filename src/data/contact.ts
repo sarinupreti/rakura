@@ -16,7 +16,7 @@ export const contact = {
   },
   thailand: {
     label: "Thailand",
-    email: "rakurathailand@gmail.com",
+    email: "rakura.thailand@gmail.com",
     website: "https://rakura.vercel.app",
     agents: [
       { name: "Anusit L.", languages: "Thai / English", phone: "+66 98 887 3040" },

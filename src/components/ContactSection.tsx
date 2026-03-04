@@ -173,24 +173,11 @@ function ContactFormInner({ locale }: { locale: Locale }) {
                 </div>
               ))}
             </div>
-            <div className="mt-3 space-y-1">
+            <div className="mt-3">
               <a href={`mailto:${contact.thailand.email}`} className="block text-sm text-rakura-gold hover:text-rakura-gold-light transition-colors">
                 {contact.thailand.email}
               </a>
-              <a href={contact.thailand.website} target="_blank" rel="noopener noreferrer" className="block text-sm text-rakura-muted hover:text-foreground transition-colors">
-                {contact.thailand.website}
-              </a>
             </div>
-          </div>
-
-          {/* Head office */}
-          <div className="pt-3 border-t border-foreground/10 dark:border-white/10">
-            <p className="text-xs font-semibold tracking-widest uppercase text-rakura-muted mb-2">{contact.headOffice.label}</p>
-            <p className="text-xs text-rakura-muted">{contact.headOffice.address}</p>
-            <p className="text-xs text-rakura-muted">{contact.headOffice.phone}</p>
-            <a href={`mailto:${contact.email}`} className="text-rakura-gold hover:text-rakura-gold-light text-xs mt-1 inline-block transition-colors">
-              {contact.email}
-            </a>
           </div>
         </div>
       </section>

@@ -34,16 +34,23 @@ export function Footer({ locale }: { locale: Locale }) {
           </div>
           <div>
             <p className="font-semibold text-white">{t.contact}</p>
-            <p className="text-sm mt-2">{contact.regional.address}</p>
-            <p className="text-sm">{contact.regional.phone}</p>
-            <p className="text-sm mt-2">{contact.headOffice.address}</p>
-            <p className="text-sm">{contact.headOffice.phone}</p>
-            <a
-              href={`mailto:${contact.email}`}
-              className="text-rakura-gold-light hover:underline text-sm mt-2 inline-block transition-opacity hover:opacity-90"
-            >
-              {contact.email}
-            </a>
+            <div className="mt-3 space-y-1.5 text-sm">
+              {contact.thailand.agents.map((agent) => (
+                <div key={agent.name}>
+                  <span className="text-stone-300 font-medium">{agent.name}</span>
+                  <span className="text-stone-500 text-xs ml-1.5">({agent.languages})</span>
+                  <a href={`tel:${agent.phone.replace(/\s/g, "")}`} className="block text-rakura-gold-light hover:underline transition-opacity hover:opacity-90 text-sm">
+                    {agent.phone}
+                  </a>
+                </div>
+              ))}
+              <a
+                href={`mailto:${contact.thailand.email}`}
+                className="block text-rakura-gold-light hover:underline mt-2 transition-opacity hover:opacity-90"
+              >
+                {contact.thailand.email}
+              </a>
+            </div>
           </div>
           <div>
             <p className="font-semibold text-white">{t.follow}</p>
