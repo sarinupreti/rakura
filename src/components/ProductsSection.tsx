@@ -76,7 +76,7 @@ export function ProductsSection({ locale }: { locale: Locale }) {
               className={`px-4 py-2 text-xs font-semibold tracking-wider uppercase transition-all duration-200 ${
                 activeCategory === "all"
                   ? "bg-rakura-gold text-rakura-dark"
-                  : "border border-foreground/20 text-rakura-muted hover:border-rakura-gold hover:text-foreground"
+                  : "border border-rakura-gold/30 text-rakura-muted hover:border-rakura-gold hover:text-foreground"
               }`}
             >
               {isEn ? "All" : "ทั้งหมด"}
@@ -89,7 +89,7 @@ export function ProductsSection({ locale }: { locale: Locale }) {
                 className={`px-4 py-2 text-xs font-semibold tracking-wider uppercase transition-all duration-200 ${
                   activeCategory === cat
                     ? "bg-rakura-gold text-rakura-dark"
-                    : "border border-foreground/20 text-rakura-muted hover:border-rakura-gold hover:text-foreground"
+                    : "border border-rakura-gold/30 text-rakura-muted hover:border-rakura-gold hover:text-foreground"
                 }`}
               >
                 {t[categoryKeys[cat]]}

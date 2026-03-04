@@ -124,7 +124,7 @@ export function SearchClient({ locale }: Props) {
                 className={`shrink-0 px-3 py-1 text-[10px] font-semibold tracking-wider uppercase transition-all duration-150 ${
                   activeCategory === cat
                     ? "bg-rakura-gold text-rakura-dark"
-                    : "border border-foreground/15 text-rakura-muted hover:border-rakura-gold hover:text-foreground"
+                    : "border border-rakura-gold/30 text-rakura-muted hover:border-rakura-gold hover:text-foreground"
                 }`}
               >
                 {isEn ? categoryLabels[cat].en : categoryLabels[cat].th}
