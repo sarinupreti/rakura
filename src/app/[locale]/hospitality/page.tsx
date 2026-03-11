@@ -145,6 +145,16 @@ export default function HospitalityPage({ params }: { params: { locale: string }
             >
               {isEn ? "Chat on Line" : "คุยทาง Line"}
             </a>
+            <a
+              href="/RakuraCatalogue.pdf"
+              download="Rakura-Hospitality-Catalogue.pdf"
+              className="inline-flex items-center gap-2 border border-white/30 text-white/80 font-semibold text-sm tracking-wider uppercase px-8 py-3.5 hover:bg-white/10 hover:border-white/60 hover:text-white transition-colors duration-200"
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3" />
+              </svg>
+              {isEn ? "Download Catalogue PDF" : "ดาวน์โหลด Catalogue"}
+            </a>
           </div>
         </div>
       </section>
@@ -357,6 +367,35 @@ export default function HospitalityPage({ params }: { params: { locale: string }
         </div>
       </section>
 
+      {/* ── PARTNER PROPERTIES ── */}
+      <section className="py-16 sm:py-20 px-4 bg-stone-50 border-y border-stone-200">
+        <div className="max-w-5xl mx-auto">
+          <AnimateOnView animation="fade-in-up">
+            <p className="text-center text-xs tracking-widest uppercase text-rakura-muted mb-10">
+              {isEn ? "Trusted By Properties Across Thailand" : "ได้รับความไว้วางใจจากที่พักทั่วไทย"}
+            </p>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-6">
+              {[
+                { icon: "🏨", nameEn: "Luxury Hotels", nameTh: "โรงแรมลักชัวรี", descEn: "5-star in-room amenities", descTh: "สิ่งอำนวยความสะดวกในห้อง" },
+                { icon: "🧘", nameEn: "Wellness Retreats", nameTh: "รีทรีตเวลเนส", descEn: "Spa & treatment menus", descTh: "เมนูสปาและการบำบัด" },
+                { icon: "🍽️", nameEn: "Fine Dining", nameTh: "ร้านอาหารระดับสูง", descEn: "Restaurant tea service", descTh: "บริการชาในร้านอาหาร" },
+                { icon: "🌿", nameEn: "Eco Resorts", nameTh: "อีโครีสอร์ท", descEn: "Sustainable F&B programmes", descTh: "โปรแกรม F&B ยั่งยืน" },
+              ].map((partner, i) => (
+                <AnimateOnView key={i} animation="zoom-in" delay={i * 70}>
+                  <div className="flex flex-col items-center text-center p-5 bg-white border border-stone-200 hover:border-rakura-gold/40 transition-colors">
+                    <span className="text-3xl mb-3">{partner.icon}</span>
+                    <p className="font-semibold text-foreground text-sm mb-1">
+                      {isEn ? partner.nameEn : partner.nameTh}
+                    </p>
+                    <p className="text-xs text-rakura-muted">{isEn ? partner.descEn : partner.descTh}</p>
+                  </div>
+                </AnimateOnView>
+              ))}
+            </div>
+          </AnimateOnView>
+        </div>
+      </section>
+
       {/* ── CTA CONTACT ── */}
       <section className="bg-rakura-dark py-20 sm:py-24 px-4 text-center">
         <AnimateOnView animation="fade-in-up">
@@ -397,6 +436,16 @@ export default function HospitalityPage({ params }: { params: { locale: string }
             >
               {isEn ? "Email Enquiry" : "สอบถามทางอีเมล"}
             </Link>
+            <a
+              href="/RakuraCatalogue.pdf"
+              download="Rakura-Hospitality-Catalogue.pdf"
+              className="inline-flex items-center gap-2 border border-white/30 text-white/70 font-semibold text-sm tracking-wider uppercase px-8 py-3.5 hover:bg-white/10 hover:border-white/60 hover:text-white transition-colors duration-200"
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3" />
+              </svg>
+              {isEn ? "PDF Catalogue" : "PDF Catalogue"}
+            </a>
           </div>
         </AnimateOnView>
       </section>

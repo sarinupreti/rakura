@@ -22,6 +22,20 @@
   }
 }
 
+/* Class-based dark mode (for toggle) — overrides media query */
+.dark {
+  --background: #120f0d;
+  --foreground: #f0ebe3;
+  --rakura-muted: #9e8e7e;
+}
+
+/* Light override when OS is dark but user chose light */
+.light {
+  --background: #f7f3ec;
+  --foreground: #1a1512;
+  --rakura-muted: #6b5e52;
+}
+
 html {
   scroll-behavior: smooth;
 }

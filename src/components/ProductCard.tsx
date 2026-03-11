@@ -4,6 +4,7 @@ import type { Product } from "@/data/products";
 import type { Locale } from "@/lib/i18n";
 import { getTranslations } from "@/data/translations";
 import { AddToBasketButton } from "@/components/AddToBasketButton";
+import { WishlistButton } from "@/components/WishlistButton";
 
 // Colour accent per product category
 const categoryStyles: Record<string, { dot: string; label: string; labelEn: string; labelTh: string }> = {
@@ -56,6 +57,7 @@ export function ProductCard({ product, locale }: { product: Product; locale: Loc
       {/* Clickable image → product detail */}
       <Link href={productUrl} className="block">
         <div className="aspect-[3/4] relative bg-stone-50 overflow-hidden mt-1">
+          <WishlistButton productId={product.id} />
           {hasImage ? (
             <Image
               src={product.image!}

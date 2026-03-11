@@ -1,6 +1,7 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useEffect, useState } from "react";
+import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import type { Locale } from "@/lib/i18n";
 import { getTranslations } from "@/data/translations";
 import { products, productCategories, type ProductCategory } from "@/data/products";
@@ -20,8 +21,30 @@ const categoryKeys: Record<
 };
 
 export function ProductsSection({ locale }: { locale: Locale }) {
-  const [activeCategory, setActiveCategory] = useState<ProductCategory | "all">("all");
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const pathname = usePathname();
+  const [activeCategory, setActiveCategory] = useState<ProductCategory | "all">(() => {
+    return "all";
+  });
   const t = getTranslations(locale).products;
+
+  // Sync category from URL on mount
+  useEffect(() => {
+    const cat = searchParams.get("category");
+    if (cat && (productCategories.includes(cat as ProductCategory) || cat === "all")) {
+      setActiveCategory(cat as ProductCategory | "all");
+    }
+  }, [searchParams]);
+
+  const handleCategoryChange = (cat: ProductCategory | "all") => {
+    setActiveCategory(cat);
+    const params = new URLSearchParams(searchParams.toString());
+    if (cat === "all") params.delete("category");
+    else params.set("category", cat);
+    const query = params.toString();
+    router.replace(`${pathname}${query ? `?${query}` : ""}#products`, { scroll: false });
+  };
 
   const filteredProducts = useMemo(() => {
     if (activeCategory === "all") return products;
@@ -43,7 +66,7 @@ export function ProductsSection({ locale }: { locale: Locale }) {
         <div className="flex flex-wrap gap-2 mb-10 border-b border-foreground/10 dark:border-white/10 pb-5">
           <button
             type="button"
-            onClick={() => setActiveCategory("all")}
+            onClick={() => handleCategoryChange("all")}
             className={`px-4 py-2 text-xs font-semibold tracking-wider uppercase transition-all duration-200 ${
               activeCategory === "all"
                 ? "bg-rakura-gold text-rakura-dark"
@@ -56,7 +79,7 @@ export function ProductsSection({ locale }: { locale: Locale }) {
             <button
               key={cat}
               type="button"
-              onClick={() => setActiveCategory(cat)}
+              onClick={() => handleCategoryChange(cat)}
               className={`px-4 py-2 text-xs font-semibold tracking-wider uppercase transition-all duration-200 ${
                 activeCategory === cat
                   ? "bg-rakura-gold text-rakura-dark"

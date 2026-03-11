@@ -12,6 +12,8 @@ import { OriginMap } from "@/components/OriginMap";
 import { FloatingLeaves } from "@/components/FloatingLeaves";
 import { CounterAnimation } from "@/components/CounterAnimation";
 import { TextReveal } from "@/components/TextReveal";
+import { TestimonialsSection } from "@/components/TestimonialsSection";
+import { PressStrip } from "@/components/PressStrip";
 
 // Icons per 1NG feature
 const featureIcons: Record<string, string> = {
@@ -155,6 +157,9 @@ export default function HomePage({ params }: { params: { locale: string } }) {
         </div>
       </section>
 
+      {/* ── PRESS / RECOGNITION STRIP ── */}
+      <PressStrip locale={locale} />
+
       {/* ── BRAND STATEMENT ── */}
       <section className="bg-background py-20 sm:py-28 px-4">
         <div className="max-w-3xl mx-auto text-center">
@@ -273,6 +278,33 @@ export default function HomePage({ params }: { params: { locale: string } }) {
               </div>
             </AnimateOnView>
           </div>
+        </div>
+      </section>
+
+      {/* ── ORIGIN VIDEO ── */}
+      <section className="bg-rakura-dark py-16 sm:py-20 px-4">
+        <div className="max-w-4xl mx-auto">
+          <AnimateOnView animation="fade-in-up">
+            <div className="text-center mb-10">
+              <p className="eyebrow text-rakura-gold mb-3">{isEn ? "See It For Yourself" : "ดูด้วยตัวเอง"}</p>
+              <h2 className="font-display font-bold text-white text-2xl sm:text-3xl">
+                {isEn ? "From Himalayan Farm to Your Cup" : "จากไร่หิมาลัยสู่ถ้วยของคุณ"}
+              </h2>
+            </div>
+            {/* Video embed placeholder — swap src with actual YouTube embed URL */}
+            <div className="relative w-full aspect-video bg-stone-900 rounded-sm overflow-hidden border border-white/10">
+              <iframe
+                src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=0&rel=0&modestbranding=1"
+                title={isEn ? "Rakura — From Himalayan Farm to Cup" : "Rakura — จากไร่หิมาลัยสู่ถ้วย"}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                className="absolute inset-0 w-full h-full"
+              />
+            </div>
+            <p className="text-center text-xs text-white/30 mt-3">
+              {isEn ? "Nepal's Finest Himalayan Teas — The Rakura Story" : "ชาหิมาลัยชั้นเลิศของเนปาล — เรื่องราว Rakura"}
+            </p>
+          </AnimateOnView>
         </div>
       </section>
 
@@ -544,6 +576,75 @@ export default function HomePage({ params }: { params: { locale: string } }) {
       <div className="marquee-pause">
         <Marquee locale={locale} variant="dark" />
       </div>
+
+      {/* ── SOCIAL FEED (static curated grid) ── */}
+      <section className="bg-background py-16 sm:py-20 px-4">
+        <div className="max-w-5xl mx-auto">
+          <AnimateOnView animation="fade-in-up">
+            <div className="flex items-center justify-between mb-8">
+              <div>
+                <p className="eyebrow mb-1">{isEn ? "Follow Us" : "ติดตามเรา"}</p>
+                <h2 className="font-display font-bold text-foreground text-xl sm:text-2xl">
+                  @Rakuratea
+                </h2>
+              </div>
+              <a
+                href="https://www.instagram.com/rakuratea"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xs font-semibold tracking-wider uppercase text-rakura-gold border border-rakura-gold/40 hover:border-rakura-gold hover:bg-rakura-gold/10 px-5 py-2 transition-all duration-200"
+              >
+                {isEn ? "Follow on Instagram" : "ติดตามบน Instagram"}
+              </a>
+            </div>
+          </AnimateOnView>
+          <div className="grid grid-cols-3 sm:grid-cols-6 gap-2 sm:gap-3">
+            {[
+              "/assets/pdf/collection-noir-transparent.png",
+              "/assets/pdf/page23_large_0.png",
+              "/assets/pdf/collection-blossoms-transparent.png",
+              "/assets/pdf/page9_large_0.png",
+              "/assets/pdf/collection-silver-transparent.png",
+              "/assets/pdf/page24_large_0.png",
+            ].map((src, i) => (
+              <AnimateOnView key={i} animation="zoom-in" delay={i * 50}>
+                <a
+                  href="https://www.instagram.com/rakuratea"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block aspect-square relative bg-stone-100 overflow-hidden group"
+                >
+                  <Image
+                    src={src}
+                    alt="Rakura on Instagram"
+                    fill
+                    className="object-cover group-hover:scale-110 transition-transform duration-500"
+                    sizes="(max-width: 640px) 33vw, 16vw"
+                  />
+                  <div className="absolute inset-0 bg-rakura-dark/0 group-hover:bg-rakura-dark/40 transition-all duration-300 flex items-center justify-center">
+                    <svg
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="white"
+                      strokeWidth="1.5"
+                      className="opacity-0 group-hover:opacity-100 transition-opacity"
+                    >
+                      <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                      <circle cx="12" cy="12" r="4" />
+                      <circle cx="17.5" cy="6.5" r="1" fill="white" stroke="none" />
+                    </svg>
+                  </div>
+                </a>
+              </AnimateOnView>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── TESTIMONIALS ── */}
+      <TestimonialsSection locale={locale} />
 
       {/* ── CONTACT ── */}
       <ContactSection locale={locale} />
