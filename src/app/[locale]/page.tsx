@@ -585,11 +585,11 @@ export default function HomePage({ params }: { params: { locale: string } }) {
               <div>
                 <p className="eyebrow mb-1">{isEn ? "Follow Us" : "ติดตามเรา"}</p>
                 <h2 className="font-display font-bold text-foreground text-xl sm:text-2xl">
-                  @Rakuratea
+                  @rakura.th
                 </h2>
               </div>
               <a
-                href="https://www.instagram.com/rakuratea"
+                href="https://www.instagram.com/rakura.th"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-xs font-semibold tracking-wider uppercase text-rakura-gold border border-rakura-gold/40 hover:border-rakura-gold hover:bg-rakura-gold/10 px-5 py-2 transition-all duration-200"
@@ -609,7 +609,7 @@ export default function HomePage({ params }: { params: { locale: string } }) {
             ].map((src, i) => (
               <AnimateOnView key={i} animation="zoom-in" delay={i * 50}>
                 <a
-                  href="https://www.instagram.com/rakuratea"
+                  href="https://www.instagram.com/rakura.th"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="block aspect-square relative bg-stone-100 overflow-hidden group"

@@ -3,7 +3,7 @@ export const contact = {
   tagline: "We Love All Things Tea and Hence, Talking Tea.",
   email: "talktea@rakura.com.np",
   website: "https://www.rakura.com.np",
-  social: "@Rakuratea",
+  social: "@rakura.th",
   regional: {
     label: "Regional Office",
     address: "GPO Box 1334, 1655 Museum Road, Chhauni, Kathmandu, Nepal",
