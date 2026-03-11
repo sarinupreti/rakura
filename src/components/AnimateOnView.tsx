@@ -2,7 +2,15 @@
 
 import { useEffect, useRef, useState } from "react";
 
-type Animation = "fade-in" | "fade-in-up" | "fade-in-down" | "scale-in";
+export type Animation =
+  | "fade-in"
+  | "fade-in-up"
+  | "fade-in-down"
+  | "scale-in"
+  | "slide-in-left"
+  | "slide-in-right"
+  | "clip-reveal"
+  | "zoom-in";
 
 export function AnimateOnView({
   children,
@@ -23,7 +31,10 @@ export function AnimateOnView({
     if (!el) return;
     const obs = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) setVisible(true);
+        if (entry.isIntersecting) {
+          setVisible(true);
+          obs.disconnect();
+        }
       },
       { threshold: 0.08, rootMargin: "0px 0px -40px 0px" }
     );
@@ -36,7 +47,12 @@ export function AnimateOnView({
     "fade-in-up": "animate-fade-in-up",
     "fade-in-down": "animate-fade-in-down",
     "scale-in": "animate-scale-in",
+    "slide-in-left": "animate-slide-in-left",
+    "slide-in-right": "animate-slide-in-right",
+    "clip-reveal": "animate-clip-reveal",
+    "zoom-in": "animate-zoom-in",
   };
+
   const opacity = visible ? "opacity-100" : "opacity-0";
   const animateClass = visible ? animationClasses[animation] : "";
   const style = delay > 0 && visible ? { animationDelay: `${delay}ms` } : undefined;
