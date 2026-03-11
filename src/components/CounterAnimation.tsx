@@ -25,6 +25,7 @@ export function CounterAnimation({
   const [started, setStarted] = useState(false);
   const ref = useRef<HTMLSpanElement>(null);
   const rafRef = useRef<number | null>(null);
+  const startedRef = useRef(false);
 
   useEffect(() => {
     const el = ref.current;
@@ -32,15 +33,17 @@ export function CounterAnimation({
 
     const obs = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting && !started) {
+        if (entry.isIntersecting && !startedRef.current) {
+          startedRef.current = true;
           setStarted(true);
+          obs.disconnect();
         }
       },
-      { threshold: 0.3 }
+      { threshold: 0.05 }
     );
     obs.observe(el);
     return () => obs.disconnect();
-  }, [started]);
+  }, []);
 
   useEffect(() => {
     if (!started) return;

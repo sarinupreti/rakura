@@ -5,6 +5,7 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { FloatingCTA } from "@/components/FloatingCTA";
 import { BasketProvider } from "@/contexts/BasketContext";
+import { CookieBanner } from "@/components/CookieBanner";
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
@@ -42,6 +43,7 @@ export default function LocaleLayout({
       <main className="flex-1">{children}</main>
       <Footer locale={locale as Locale} />
       <FloatingCTA />
+      <CookieBanner locale={locale} />
     </BasketProvider>
   );
 }
