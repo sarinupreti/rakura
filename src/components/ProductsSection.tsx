@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useEffect, useState } from "react";
+import { Suspense, useMemo, useEffect, useState } from "react";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import type { Locale } from "@/lib/i18n";
 import { getTranslations } from "@/data/translations";
@@ -20,13 +20,11 @@ const categoryKeys: Record<
   presenters: "presenters",
 };
 
-export function ProductsSection({ locale }: { locale: Locale }) {
+function ProductsSectionInner({ locale }: { locale: Locale }) {
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
-  const [activeCategory, setActiveCategory] = useState<ProductCategory | "all">(() => {
-    return "all";
-  });
+  const [activeCategory, setActiveCategory] = useState<ProductCategory | "all">("all");
   const t = getTranslations(locale).products;
 
   // Sync category from URL on mount
@@ -98,5 +96,13 @@ export function ProductsSection({ locale }: { locale: Locale }) {
         </div>
       </div>
     </section>
+  );
+}
+
+export function ProductsSection({ locale }: { locale: Locale }) {
+  return (
+    <Suspense fallback={<div className="py-20 sm:py-28" />}>
+      <ProductsSectionInner locale={locale} />
+    </Suspense>
   );
 }
